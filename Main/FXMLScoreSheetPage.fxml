@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.MainController">
+   <children>
+      <Label layoutX="369.0" layoutY="148.0" text="Single sets" />
+      <Label layoutX="365.0" layoutY="431.0" text="Double Sets" />
+      <ComboBox layoutX="279.0" layoutY="179.0" prefWidth="150.0" promptText="Home Player" />
+      <ComboBox layoutX="600.0" layoutY="131.0" prefWidth="150.0" promptText="Away Player" />
+      <Label layoutX="523.0" layoutY="78.0" text="AwayTeam" />
+      <Label layoutX="229.0" layoutY="78.0" text="Home Team" />
+      <ComboBox layoutX="600.0" layoutY="74.0" prefWidth="150.0" promptText="Away Team" />
+      <ComboBox layoutX="306.0" layoutY="74.0" prefWidth="150.0" promptText="Home team" />
+      <TextField fx:id="field1" layoutX="439.0" layoutY="179.0" />
+      <TextField fx:id="field2" layoutX="439.0" layoutY="216.0" />
+      <TextField fx:id="field3" layoutX="439.0" layoutY="261.0" />
+      <TextField fx:id="field4" layoutX="439.0" layoutY="301.0" />
+      <TextField fx:id="field5" layoutX="439.0" layoutY="345.0" />
+      <TextField fx:id="field6" layoutX="439.0" layoutY="386.0" />
+      <TextField fx:id="field7DB" layoutX="439.0" layoutY="427.0" />
+      <TextField fx:id="field9DB" layoutX="439.0" layoutY="499.0" />
+      <TextField fx:id="field15" layoutX="600.0" layoutY="386.0" />
+      <TextField fx:id="field8DB" layoutX="439.0" layoutY="460.0" />
+      <TextArea layoutX="600.0" layoutY="426.0" prefHeight="104.0" prefWidth="168.0" />
+      <TextField fx:id="field10" layoutX="600.0" layoutY="179.0" />
+      <TextField fx:id="field11" layoutX="600.0" layoutY="216.0" />
+      <TextField fx:id="field12" layoutX="600.0" layoutY="261.0" />
+      <TextField fx:id="field13" layoutX="600.0" layoutY="301.0" />
+      <TextField fx:id="field14" layoutX="600.0" layoutY="345.0" />
+      <ComboBox layoutX="439.0" layoutY="131.0" prefWidth="150.0" promptText="Away Player" />
+      <ComboBox layoutX="279.0" layoutY="301.0" prefWidth="150.0" promptText="Home Player" />
+      <Button layoutX="120.0" layoutY="24.0" mnemonicParsing="false" onAction="#modifyScoreSheet" text="Modify sheet" />
+      <Button layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#newScoreSheet" text="New sheet" />
+      <Button layoutX="96.0" layoutY="539.0" mnemonicParsing="false" onAction="#calculateScores" prefHeight="25.0" prefWidth="784.0" text="Calculate and submit scores" />
+   </children>
+</AnchorPane>
