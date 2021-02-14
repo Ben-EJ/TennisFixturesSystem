@@ -40,10 +40,10 @@ public class AdminPageController extends Thread implements Initializable {
     @FXML
     private TextField playerNameField;
     
-    public List<TeamsPlayers.Teams> teams = new ArrayList<TeamsPlayers.Teams>();
-    public List<String> teamsAlreadyAdded = new ArrayList<String>();
+    public static List<TeamsPlayers.Teams> teams = new ArrayList<TeamsPlayers.Teams>();
+    public static List<String> teamsAlreadyAdded = new ArrayList<String>();
     
-    public List<Match.Fixtures> fixtures = new ArrayList<Match.Fixtures>();
+    public static List<Match.Fixtures> fixtures = new ArrayList<Match.Fixtures>();
     public ArrayList<ArrayList<String>> fixtureList = new ArrayList<ArrayList<String>>();
     
     @FXML
@@ -137,7 +137,7 @@ public class AdminPageController extends Thread implements Initializable {
             generatedFixtures.setHeaderText("Fixtures created, you have: " + teams.size() + " teams ");
             generatedFixtures.showAndWait();
             
-            for (int fixtureAmmount = 0; fixtureAmmount < fixtureList.size(); fixtureAmmount = 0){
+            for (int fixtureAmmount = 0; fixtureAmmount < fixtureList.size(); fixtureAmmount++){
                 fixtures.add(new Match.Fixtures(fixtureAmmount, fixtureList.get(fixtureAmmount)));
             }
             
@@ -153,11 +153,44 @@ public class AdminPageController extends Thread implements Initializable {
     @FXML
     void generateTeamStats(ActionEvent event) {
         System.out.println("generateTeamStats");
+        testData();
     }
     
+    public void testData(){
+        teams.add(new TeamsPlayers.Teams("Team1", 1));
+        teams.add(new TeamsPlayers.Teams("Team2", 2));
+        teams.add(new TeamsPlayers.Teams("Team3", 3));
+        teams.add(new TeamsPlayers.Teams("Team4", 4));
+        
+        teamsAlreadyAdded.add("Team1");
+        teamsAlreadyAdded.add("Team2");
+        teamsAlreadyAdded.add("Team3");
+        teamsAlreadyAdded.add("Team4");
+        
+        teams.get(0).setPlayers("Player1Team1", 1);
+        teams.get(0).setPlayers("Player2Team1", 2);
+        
+        teams.get(1).setPlayers("Player1Team2", 1);
+        teams.get(1).setPlayers("Player2Team2", 2);
+        
+        teams.get(2).setPlayers("Player1Team3", 1);
+        teams.get(2).setPlayers("Player2Team3", 2);
+        
+        teams.get(3).setPlayers("Player1Team4", 1);
+        teams.get(3).setPlayers("Player2Team4", 2);
+        
+        for(int i = 0; i < teams.size(); i++){
+            System.out.println(teams.get(i).getTeamName());
+            for (int x = 0; x < teams.get(i).getPlayers().size(); x++){
+                System.out.println(teams.get(i).getPlayers().get(x).getNamePlayer());
+            }
+            
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }    
     
 }

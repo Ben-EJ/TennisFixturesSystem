@@ -88,7 +88,7 @@ public class MainController extends Thread implements Initializable {
                 Parent fxmlScoreSheetPageViewLoad = (Parent) fxmlScoreSheetPageView.load();
                 ScoreSheetPageTab.setContent(fxmlScoreSheetPageViewLoad);
                 }catch (Exception e){
-                    System.out.println("Error: Cant load new window");
+                    System.out.println("Error: Cant load new window ScoreSheet");
                 }
         }else{
             System.out.println("Incorrect password or username");

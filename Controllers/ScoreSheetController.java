@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -32,7 +33,7 @@ import javafx.stage.Stage;
  *
  * @author benja
  */
-public class ScoreSheetController extends Thread implements Initializable {
+public class ScoreSheetController implements Initializable {
     @FXML
     private TextField field9DB;
 
@@ -77,15 +78,89 @@ public class ScoreSheetController extends Thread implements Initializable {
 
     @FXML
     private TextField field4;
+    
+    @FXML
+    private ComboBox<String> homeTeamSelection;
 
     @FXML
-    void modifyScoreSheet(ActionEvent event) {
-        
+    private ComboBox<String> awayTeamSelection;
+    
+    @FXML
+    private ComboBox<String> awayPlayerOne;
+    @FXML
+    private ComboBox<String> awayPlayerTwo;
+    
+    @FXML
+    private ComboBox<String> homePlayerOne;
+    @FXML
+    private ComboBox<String> homePlayerTwo;
+    
+    public static List<Match.Match> ScoreSheet = new ArrayList<Match.Match>();
+    
+    @FXML
+    void updateDropdownTeams(ActionEvent event) {
+        System.out.println("updateTeamList");         
+        ObservableList<String> TeamSelectionText = FXCollections.observableArrayList(AdminPageController.teamsAlreadyAdded);
+        homeTeamSelection.setItems(TeamSelectionText);
+        awayTeamSelection.setItems(TeamSelectionText);
     }
 
     @FXML
+    void updateDropdownPlayers(ActionEvent event) {
+        List<String> playersHome = new ArrayList<String>();
+        List<String> playersAway = new ArrayList<String>();
+        for (int i = 0; i < AdminPageController.teams.size(); i++){
+            
+               if (AdminPageController.teams.get(i).getTeamName().equals(awayTeamSelection.getValue())){
+                   for(int x = 0; x < AdminPageController.teams.get(i).getPlayers().size(); x++){
+                        playersAway.add(AdminPageController.teams.get(i).getPlayers().get(x).getNamePlayer());
+                   }
+                   ObservableList<String> playerSelectionTextAway = FXCollections.observableArrayList(playersAway);
+                   awayPlayerOne.setItems(playerSelectionTextAway);
+                   awayPlayerTwo.setItems(playerSelectionTextAway);
+          
+            }
+        }
+        for (int i = 0; i < AdminPageController.teams.size(); i++){
+          if (AdminPageController.teams.get(i).getTeamName().equals(homeTeamSelection.getValue())){
+                    for(int z = 0; z < AdminPageController.teams.get(i).getPlayers().size(); z++){
+                        playersHome.add(AdminPageController.teams.get(i).getPlayers().get(z).getNamePlayer()); 
+                    }
+                    ObservableList<String> playerSelectionTextHome = FXCollections.observableArrayList(playersHome);
+                    homePlayerOne.setItems(playerSelectionTextHome);
+                    homePlayerTwo.setItems(playerSelectionTextHome);
+                }
+        }
+    }
+    
+    @FXML
+    void modifyScoreSheet(ActionEvent event) {
+       
+    }
+    
+   
+    @FXML
     void newScoreSheet(ActionEvent event) {
-
+        if (AdminPageController.fixtures.isEmpty()){
+                  Alert noFixturesCreated = new Alert(Alert.AlertType.ERROR);
+                  noFixturesCreated.setHeaderText("No fixtures created.");
+                  noFixturesCreated.showAndWait();
+        }else{
+            for (int i = 0; i < AdminPageController.fixtures.size(); i++){
+            if(AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(awayTeamSelection.getValue())){
+                System.out.println("MATCH IN FIXTURES 1");
+                break;
+            }
+            else if(AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(awayTeamSelection.getValue())){
+                System.out.println("MATCH IN FIXTURES 2");
+                break;
+            }
+            else{
+                 System.out.println("Does not exist");
+            }
+        }
+        }
+       
     }
 
     @FXML
