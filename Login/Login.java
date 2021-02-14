@@ -10,8 +10,8 @@ package Login;
  * @author benja
  */
 public class Login {
-    private static String usernameAssosiationSecritary = "admin";
-    private static String passwordAssosiationSecritary = "password";
+    private static String usernameAssosiationSecritary = "";
+    private static String passwordAssosiationSecritary = "";
     
     public Login(){
         

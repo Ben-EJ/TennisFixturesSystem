@@ -6,6 +6,7 @@
 package TeamsPlayers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,19 +14,27 @@ import java.util.ArrayList;
  */
 public class Teams {
     private String teamName;
-    private ArrayList<String> players = new ArrayList<String>();
+    private int teamNumber;
     
-    public Teams(String tName){
+    private List<Players> players = new ArrayList<Players>();
+     
+    
+    public Teams(String tName,int teamNum){
         teamName = tName;
+        teamNumber = teamNum;
     }
+    
     public String getTeamName(){
         return teamName;
     }
-    public ArrayList<String> getPlayers(){
+     public int getTeamNumber(){
+        return teamNumber;
+    }
+    public List<TeamsPlayers.Players> getPlayers(){
         return players;
     }
     
-    public void setPlayers(String player){
-        players.add(player);
+    public void setPlayers(String name, int playerNumber){
+        players.add(new Players(name, playerNumber));
     }
 }

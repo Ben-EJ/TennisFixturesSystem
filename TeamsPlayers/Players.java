@@ -9,28 +9,19 @@ package TeamsPlayers;
  *
  * @author benja
  */
-public class Players {
-    private String firstNamePlayer;
-    private String lastNamePlayer;
-    private String teamName;
-    private String teamType;
+public class Players{
+    private String namePlayer;
+    private int playerNumber;
+
+    Players(String name, int playerNum) {
+        namePlayer = name;
+        playerNumber = playerNum;
+    }
     
-    public void Players(String firstName,String lastName,String tName,String tType){
-        firstNamePlayer = firstName;
-        lastNamePlayer = lastName;
-        teamName = tName;
-        teamType = tType;
+    public String getNamePlayer(){
+        return namePlayer;
     }
-    public String getFirstNamePlayer(){
-        return firstNamePlayer;
-    }
-    public String getLastNamePlayer(){
-        return lastNamePlayer;
-    }
-    public String getTeamName(){
-        return teamName;
-    }
-    public String getTeamType(){
-        return teamType;
+    public int getPlayerNumber(){
+        return playerNumber;
     }
 }
