@@ -117,19 +117,6 @@ public class AdminPageController extends Thread implements Initializable {
                          System.out.println(teams.get(x).getTeamName());
                          System.out.println("============================");
                          fixtureList.add(teamPair);
-//                        boolean foundMatch = false;
-//                        for (int z = 0; z < fixtureList.size(); z++){
-//                            if (fixtureList.get(z).get(1).equals(teams.get(i).getTeamName()) && fixtureList.get(z).get(0).equals(teams.get(x).getTeamName())){
-//                                foundMatch = true;
-////                                System.out.println("=============REJECTED PAIR===============");
-////                                System.out.println(teams.get(i).getTeamName());
-////                                System.out.println(teams.get(x).getTeamName());
-////                                System.out.println("============================");
-//                            }
-//                        }
-//                        if(foundMatch == false){
-//                           
-//                        }
                     }
                 }
             }

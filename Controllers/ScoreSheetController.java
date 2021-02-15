@@ -131,7 +131,11 @@ public class ScoreSheetController implements Initializable {
                 }
         }
     }
+    
     public static ArrayList<Match.Match> matches = new ArrayList<Match.Match>();
+    public boolean editMode = false;
+    public int editNumber = 0;      
+    
     @FXML
     void modifyScoreSheet(ActionEvent event) {
         boolean found = false;
@@ -143,6 +147,9 @@ public class ScoreSheetController implements Initializable {
             && matches.get(i).getPlayersTeamHome().get(0).equals(homePlayerOne.getValue())
             && matches.get(i).getPlayersTeamHome().get(1).equals(homePlayerTwo.getValue()))     
             {
+                editMode = true;
+                editNumber = i;
+                
                 found = true;
                 System.out.println("Found Scoresheet");
                 field1.setText(matches.get(i).getPlayerOneVsPlayerThree().get(0));
@@ -201,56 +208,82 @@ public class ScoreSheetController implements Initializable {
     @FXML
     void calculateScores(ActionEvent event) {
         System.out.println("Calculate And Save");
-         if (AdminPageController.fixtures.isEmpty()){
+        if(editMode == false){
+            if (AdminPageController.fixtures.isEmpty()){
                   Alert noFixturesCreated = new Alert(Alert.AlertType.ERROR);
                   noFixturesCreated.setHeaderText("No fixtures created.");
                   noFixturesCreated.showAndWait();
-        }else{
-            for (int i = 0; i < AdminPageController.fixtures.size(); i++){
-            if(AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(awayTeamSelection.getValue()) || AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(awayTeamSelection.getValue())){
-                ArrayList<String> playerTeamAway = new ArrayList<String>();
-                ArrayList<String> playerTeamHome = new ArrayList<String>();
+            }else{
+                for (int i = 0; i < AdminPageController.fixtures.size(); i++){
+                    if(AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(awayTeamSelection.getValue()) || AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(awayTeamSelection.getValue())){
+                        ArrayList<String> playerTeamAway = new ArrayList<String>();
+                        ArrayList<String> playerTeamHome = new ArrayList<String>();
                 
-                ArrayList<String> PlayerOnePlayerThree = new ArrayList<String>();
-                ArrayList<String> PlayerTwoPlayerThree = new ArrayList<String>();
-                ArrayList<String> PlayerOnePlayerFour = new ArrayList<String>();
-                ArrayList<String> PlayerTwoPlayerFour = new ArrayList<String>();
+                        ArrayList<String> PlayerOnePlayerThree = new ArrayList<String>();
+                        ArrayList<String> PlayerTwoPlayerThree = new ArrayList<String>();
+                        ArrayList<String> PlayerOnePlayerFour = new ArrayList<String>();
+                        ArrayList<String> PlayerTwoPlayerFour = new ArrayList<String>();
     
-                ArrayList<String> doubleS = new ArrayList<String>();
+                        ArrayList<String> doubleS = new ArrayList<String>();
     
-                playerTeamAway.add(awayPlayerOne.getValue());
-                playerTeamAway.add(awayPlayerTwo.getValue()); 
-                playerTeamHome.add(homePlayerOne.getValue());
-                playerTeamHome.add(homePlayerTwo.getValue());
+                        playerTeamAway.add(awayPlayerOne.getValue());
+                        playerTeamAway.add(awayPlayerTwo.getValue()); 
+                        playerTeamHome.add(homePlayerOne.getValue());
+                        playerTeamHome.add(homePlayerTwo.getValue());
                 
-                PlayerOnePlayerThree.add(field1.getText());
-                PlayerOnePlayerThree.add(field2.getText());
-                PlayerOnePlayerThree.add(field3.getText());
+                        PlayerOnePlayerThree.add(field1.getText());
+                        PlayerOnePlayerThree.add(field2.getText());
+                        PlayerOnePlayerThree.add(field3.getText());
                 
-                PlayerTwoPlayerThree.add(field10.getText());
-                PlayerTwoPlayerThree.add(field11.getText());
-                PlayerTwoPlayerThree.add(field12.getText());
+                        PlayerTwoPlayerThree.add(field10.getText());
+                        PlayerTwoPlayerThree.add(field11.getText());
+                        PlayerTwoPlayerThree.add(field12.getText());
                 
-                PlayerOnePlayerFour.add(field4.getText());
-                PlayerOnePlayerFour.add(field5.getText());
-                PlayerOnePlayerFour.add(field6.getText());
+                        PlayerOnePlayerFour.add(field4.getText());
+                        PlayerOnePlayerFour.add(field5.getText());
+                        PlayerOnePlayerFour.add(field6.getText());
                 
-                PlayerTwoPlayerFour.add(field13.getText());
-                PlayerTwoPlayerFour.add(field14.getText());
-                PlayerTwoPlayerFour.add(field15.getText());
+                        PlayerTwoPlayerFour.add(field13.getText());
+                        PlayerTwoPlayerFour.add(field14.getText());
+                        PlayerTwoPlayerFour.add(field15.getText());
                 
-                doubleS.add(field7DB.getText());
-                doubleS.add(field8DB.getText());
-                doubleS.add(field9DB.getText());
+                        doubleS.add(field7DB.getText());
+                        doubleS.add(field8DB.getText());
+                        doubleS.add(field9DB.getText());
                 
-                matches.add(new Match.Match(awayTeamSelection.getValue(),homeTeamSelection.getValue(),playerTeamAway,playerTeamHome,PlayerOnePlayerThree,PlayerTwoPlayerThree,PlayerOnePlayerFour,PlayerTwoPlayerFour,doubleS));
-                break;
-            }
-            else{
-                 System.out.println("Does not exist");
+                        matches.add(new Match.Match(awayTeamSelection.getValue(),homeTeamSelection.getValue(),playerTeamAway,playerTeamHome,PlayerOnePlayerThree,PlayerTwoPlayerThree,PlayerOnePlayerFour,PlayerTwoPlayerFour,doubleS));
+                        break;
+                        }
+                    else{
+                        System.out.println("Does not exist");
+                    }
+                }
             }
         }
+        else if(editMode == true){
+                System.out.print("Edit Made");
+                matches.get(editNumber).setPlayerOneVsPlayerThree(field1.getText(), 0);
+                matches.get(editNumber).setPlayerOneVsPlayerThree(field2.getText(), 1);
+                matches.get(editNumber).setPlayerOneVsPlayerThree(field3.getText(), 2);
+                
+                matches.get(editNumber).setPlayerTwoVsPlayerThree(field10.getText(), 0);
+                matches.get(editNumber).setPlayerTwoVsPlayerThree(field11.getText(), 1);
+                matches.get(editNumber).setPlayerTwoVsPlayerThree(field12.getText(), 2);
+                
+                matches.get(editNumber).setPlayerOneVsPlayerFour(field4.getText(), 0);
+                matches.get(editNumber).setPlayerOneVsPlayerFour(field5.getText(), 1);
+                matches.get(editNumber).setPlayerOneVsPlayerFour(field6.getText(), 2);
+                
+                matches.get(editNumber).setPlayerTwoVsPlayerFour(field13.getText(), 0);
+                matches.get(editNumber).setPlayerTwoVsPlayerFour(field14.getText(), 1);
+                matches.get(editNumber).setPlayerTwoVsPlayerFour(field15.getText(), 2);
+                
+                matches.get(editNumber).setDoubleSets(field7DB.getText(), 0);
+                matches.get(editNumber).setDoubleSets(field8DB.getText(), 1);
+                matches.get(editNumber).setDoubleSets(field9DB.getText(), 2);
+                editMode = false;
         }
+        
     }
     
     @Override

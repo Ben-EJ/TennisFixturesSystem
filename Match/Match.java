@@ -74,9 +74,25 @@ public class Match {
         return doubleSets;
     }
     
+    public void setPlayerOneVsPlayerThree(String valueToChangeTo, int valueToChange){
+       PlayerOneVsPlayerThree.set(valueToChange, valueToChangeTo);
+    }
     
+    public void setPlayerTwoVsPlayerThree(String valueToChangeTo, int valueToChange){
+         PlayerTwoVsPlayerThree.set(valueToChange, valueToChangeTo);
+    }
     
+    public void setPlayerOneVsPlayerFour(String valueToChangeTo, int valueToChange){
+        PlayerOneVsPlayerFour.set(valueToChange, valueToChangeTo); 
+    }
     
+    public void setPlayerTwoVsPlayerFour(String valueToChangeTo, int valueToChange){
+        PlayerTwoVsPlayerFour.set(valueToChange, valueToChangeTo); 
+    }
+    
+    public void setDoubleSets(String valueToChangeTo, int valueToChange){
+        doubleSets.set(valueToChange, valueToChangeTo); 
+    }
     
     
 }
