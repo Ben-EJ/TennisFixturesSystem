@@ -109,26 +109,27 @@ public class AdminPageController extends Thread implements Initializable {
                         
                     } else
                     {
-                        boolean foundMatch = false;
-                        for (int z = 0; z < fixtureList.size(); z++){
-                            if (fixtureList.get(z).get(1).equals(teams.get(i).getTeamName()) && fixtureList.get(z).get(0).equals(teams.get(x).getTeamName())){
-                                foundMatch = true;
-//                                System.out.println("=============REJECTED PAIR===============");
-//                                System.out.println(teams.get(i).getTeamName());
-//                                System.out.println(teams.get(x).getTeamName());
-//                                System.out.println("============================");
-                            }
-                        }
-                        if(foundMatch == false){
-                            ArrayList<String> teamPair = new ArrayList<String>();
-                            teamPair.add(teams.get(i).getTeamName());
-                            teamPair.add(teams.get(x).getTeamName());
-                            System.out.println("============================");
-                            System.out.println(teams.get(i).getTeamName());
-                            System.out.println(teams.get(x).getTeamName());
-                            System.out.println("============================");
-                            fixtureList.add(teamPair);
-                        }
+                         ArrayList<String> teamPair = new ArrayList<String>();
+                         teamPair.add(teams.get(i).getTeamName());
+                         teamPair.add(teams.get(x).getTeamName());
+                         System.out.println("============================");
+                         System.out.println(teams.get(i).getTeamName());
+                         System.out.println(teams.get(x).getTeamName());
+                         System.out.println("============================");
+                         fixtureList.add(teamPair);
+//                        boolean foundMatch = false;
+//                        for (int z = 0; z < fixtureList.size(); z++){
+//                            if (fixtureList.get(z).get(1).equals(teams.get(i).getTeamName()) && fixtureList.get(z).get(0).equals(teams.get(x).getTeamName())){
+//                                foundMatch = true;
+////                                System.out.println("=============REJECTED PAIR===============");
+////                                System.out.println(teams.get(i).getTeamName());
+////                                System.out.println(teams.get(x).getTeamName());
+////                                System.out.println("============================");
+//                            }
+//                        }
+//                        if(foundMatch == false){
+//                           
+//                        }
                     }
                 }
             }
@@ -157,27 +158,28 @@ public class AdminPageController extends Thread implements Initializable {
     }
     
     public void testData(){
-        teams.add(new TeamsPlayers.Teams("Team1", 1));
-        teams.add(new TeamsPlayers.Teams("Team2", 2));
-        teams.add(new TeamsPlayers.Teams("Team3", 3));
-        teams.add(new TeamsPlayers.Teams("Team4", 4));
+        teams.add(new TeamsPlayers.Teams("Filton", 1));
+        teams.add(new TeamsPlayers.Teams("UWE", 2));
+        teams.add(new TeamsPlayers.Teams("KCC", 3));
+        teams.add(new TeamsPlayers.Teams("Page", 4));
         
-        teamsAlreadyAdded.add("Team1");
-        teamsAlreadyAdded.add("Team2");
-        teamsAlreadyAdded.add("Team3");
-        teamsAlreadyAdded.add("Team4");
+        teamsAlreadyAdded.add("Filton");
+        teamsAlreadyAdded.add("UWE");
+        teamsAlreadyAdded.add("KCC");
+        teamsAlreadyAdded.add("Page");
         
-        teams.get(0).setPlayers("Player1Team1", 1);
-        teams.get(0).setPlayers("Player2Team1", 2);
+        teams.get(0).setPlayers("Alex", 1);
+        teams.get(0).setPlayers("Brian", 2);
         
-        teams.get(1).setPlayers("Player1Team2", 1);
-        teams.get(1).setPlayers("Player2Team2", 2);
+        teams.get(1).setPlayers("Jin", 1);
+        teams.get(1).setPlayers("Julia", 2);
+        teams.get(1).setPlayers("Stewart", 3);
         
-        teams.get(2).setPlayers("Player1Team3", 1);
-        teams.get(2).setPlayers("Player2Team3", 2);
+        teams.get(2).setPlayers("Chris", 1);
+        teams.get(2).setPlayers("Ryan", 2);
         
-        teams.get(3).setPlayers("Player1Team4", 1);
-        teams.get(3).setPlayers("Player2Team4", 2);
+        teams.get(3).setPlayers("Peter", 1);
+        teams.get(3).setPlayers("Phil", 2);
         
         for(int i = 0; i < teams.size(); i++){
             System.out.println(teams.get(i).getTeamName());

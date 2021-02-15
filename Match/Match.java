@@ -5,6 +5,7 @@
  */
 package Match;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -16,18 +17,66 @@ public class Match {
     private boolean matchStatus = false;
     private String teamOne = "";
     private String teamTwo = "";
-    private HashMap<String, int[]> singleSetData = new HashMap<String, int[]>(); 
-    private HashMap<String, int[]> doubleSetData = new HashMap<String, int[]>(); 
-    private int singleSetsPlayed = 0;
-    private int doubleSetsPlayed = 0;
+    ArrayList<String> PlayersTeamAway = new ArrayList<String>();
+    ArrayList<String> PlayersTeamHome = new ArrayList<String>();
     
-    public void Match(int Number,String team1,String team2){
-        matchNumber = Number;
+    ArrayList<String> PlayerOneVsPlayerThree = new ArrayList<String>();
+    ArrayList<String> PlayerTwoVsPlayerThree = new ArrayList<String>();
+    ArrayList<String> PlayerOneVsPlayerFour = new ArrayList<String>();
+    ArrayList<String> PlayerTwoVsPlayerFour = new ArrayList<String>();
+    
+    ArrayList<String> doubleSets = new ArrayList<String>();
+    
+    public Match(String team1, String team2,ArrayList<String> PlayersAway, ArrayList<String> PlayersHome, ArrayList<String> PlayerOnePlayerThree,ArrayList<String> PlayerTwoPlayerThree, ArrayList<String> PlayerOnePlayerFour,ArrayList<String> PlayerTwoPlayerFour, ArrayList<String> doubleS){
         teamOne = team1;
-        teamTwo = team2;       
+        teamTwo = team2;   
+        PlayersTeamAway = PlayersAway;
+        PlayersTeamHome = PlayersHome;
+        PlayerOneVsPlayerThree = PlayerOnePlayerThree;
+        PlayerTwoVsPlayerThree = PlayerTwoPlayerThree;
+        PlayerOneVsPlayerFour = PlayerOnePlayerFour;
+        PlayerTwoVsPlayerFour = PlayerTwoPlayerFour;
+        
+        doubleSets = doubleS;
     }
     
-    public void setHashMapSingle(){
-        
+    public String getTeamAway(){
+        return teamOne;
     }
+    
+    public String getTeamHome(){
+        return teamTwo;
+    }
+    
+    public ArrayList<String> getPlayersTeamAway(){
+        return PlayersTeamAway;
+    }
+    
+    public ArrayList<String> getPlayersTeamHome(){
+        return PlayersTeamHome;
+    }
+    
+    
+    public ArrayList<String> getPlayerOneVsPlayerThree(){
+        return PlayerOneVsPlayerThree;
+    }
+    public ArrayList<String> getPlayerTwoVsPlayerThree(){
+        return PlayerTwoVsPlayerThree;
+    }
+    public ArrayList<String> getPlayerOneVsPlayerFour(){
+        return PlayerOneVsPlayerFour;
+    }
+    public ArrayList<String> getPlayerTwoVsPlayerFour(){
+        return PlayerTwoVsPlayerFour;
+    }
+    
+    public ArrayList<String> getDoubleSets(){
+        return doubleSets;
+    }
+    
+    
+    
+    
+    
+    
 }

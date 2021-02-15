@@ -104,7 +104,6 @@ public class ScoreSheetController implements Initializable {
         homeTeamSelection.setItems(TeamSelectionText);
         awayTeamSelection.setItems(TeamSelectionText);
     }
-
     @FXML
     void updateDropdownPlayers(ActionEvent event) {
         List<String> playersHome = new ArrayList<String>();
@@ -132,27 +131,119 @@ public class ScoreSheetController implements Initializable {
                 }
         }
     }
-    
+    public static ArrayList<Match.Match> matches = new ArrayList<Match.Match>();
     @FXML
     void modifyScoreSheet(ActionEvent event) {
-       
+        boolean found = false;
+        for (int i = 0; i < matches.size(); i++){
+            if(matches.get(i).getTeamAway().equals(awayTeamSelection.getValue()) 
+            && matches.get(i).getTeamHome().equals(homeTeamSelection.getValue())  
+            && matches.get(i).getPlayersTeamAway().get(0).equals(awayPlayerOne.getValue()) 
+            && matches.get(i).getPlayersTeamAway().get(1).equals(awayPlayerTwo.getValue()) 
+            && matches.get(i).getPlayersTeamHome().get(0).equals(homePlayerOne.getValue())
+            && matches.get(i).getPlayersTeamHome().get(1).equals(homePlayerTwo.getValue()))     
+            {
+                found = true;
+                System.out.println("Found Scoresheet");
+                field1.setText(matches.get(i).getPlayerOneVsPlayerThree().get(0));
+                field2.setText(matches.get(i).getPlayerOneVsPlayerThree().get(1));
+                field3.setText(matches.get(i).getPlayerOneVsPlayerThree().get(2));
+                
+                field4.setText(matches.get(i).getPlayerOneVsPlayerFour().get(0));
+                field5.setText(matches.get(i).getPlayerOneVsPlayerFour().get(1));
+                field6.setText(matches.get(i).getPlayerOneVsPlayerFour().get(2));
+                
+                field10.setText(matches.get(i).getPlayerTwoVsPlayerThree().get(0));
+                field11.setText(matches.get(i).getPlayerTwoVsPlayerThree().get(1));
+                field12.setText(matches.get(i).getPlayerTwoVsPlayerThree().get(2));
+                
+                field13.setText(matches.get(i).getPlayerTwoVsPlayerFour().get(0));
+                field14.setText(matches.get(i).getPlayerTwoVsPlayerFour().get(1));
+                field15.setText(matches.get(i).getPlayerTwoVsPlayerFour().get(2));
+                
+                field7DB.setText(matches.get(i).getDoubleSets().get(0));
+                field8DB.setText(matches.get(i).getDoubleSets().get(1));
+                field9DB.setText(matches.get(i).getDoubleSets().get(2));
+                break;
+            }
+        }
+        if(found == false){
+            Alert noMatchFound = new Alert(Alert.AlertType.ERROR);
+            noMatchFound.setHeaderText("No Match Found");
+            noMatchFound.showAndWait();
+        }
     }
     
    
     @FXML
     void newScoreSheet(ActionEvent event) {
-        if (AdminPageController.fixtures.isEmpty()){
+                field1.setText("");
+                field2.setText("");
+                field3.setText("");
+                
+                field10.setText("");
+                field11.setText("");
+                field12.setText("");
+                
+                field4.setText("");
+                field5.setText("");
+                field6.setText("");
+                
+                field13.setText("");
+                field14.setText("");
+                field15.setText("");
+                
+                field7DB.setText("");
+                field8DB.setText("");
+                field9DB.setText("");
+    }
+
+    @FXML
+    void calculateScores(ActionEvent event) {
+        System.out.println("Calculate And Save");
+         if (AdminPageController.fixtures.isEmpty()){
                   Alert noFixturesCreated = new Alert(Alert.AlertType.ERROR);
                   noFixturesCreated.setHeaderText("No fixtures created.");
                   noFixturesCreated.showAndWait();
         }else{
             for (int i = 0; i < AdminPageController.fixtures.size(); i++){
-            if(AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(awayTeamSelection.getValue())){
-                System.out.println("MATCH IN FIXTURES 1");
-                break;
-            }
-            else if(AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(awayTeamSelection.getValue())){
-                System.out.println("MATCH IN FIXTURES 2");
+            if(AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(awayTeamSelection.getValue()) || AdminPageController.fixtures.get(i).getTeamsInFixture().get(1).equals(homeTeamSelection.getValue()) && AdminPageController.fixtures.get(i).getTeamsInFixture().get(0).equals(awayTeamSelection.getValue())){
+                ArrayList<String> playerTeamAway = new ArrayList<String>();
+                ArrayList<String> playerTeamHome = new ArrayList<String>();
+                
+                ArrayList<String> PlayerOnePlayerThree = new ArrayList<String>();
+                ArrayList<String> PlayerTwoPlayerThree = new ArrayList<String>();
+                ArrayList<String> PlayerOnePlayerFour = new ArrayList<String>();
+                ArrayList<String> PlayerTwoPlayerFour = new ArrayList<String>();
+    
+                ArrayList<String> doubleS = new ArrayList<String>();
+    
+                playerTeamAway.add(awayPlayerOne.getValue());
+                playerTeamAway.add(awayPlayerTwo.getValue()); 
+                playerTeamHome.add(homePlayerOne.getValue());
+                playerTeamHome.add(homePlayerTwo.getValue());
+                
+                PlayerOnePlayerThree.add(field1.getText());
+                PlayerOnePlayerThree.add(field2.getText());
+                PlayerOnePlayerThree.add(field3.getText());
+                
+                PlayerTwoPlayerThree.add(field10.getText());
+                PlayerTwoPlayerThree.add(field11.getText());
+                PlayerTwoPlayerThree.add(field12.getText());
+                
+                PlayerOnePlayerFour.add(field4.getText());
+                PlayerOnePlayerFour.add(field5.getText());
+                PlayerOnePlayerFour.add(field6.getText());
+                
+                PlayerTwoPlayerFour.add(field13.getText());
+                PlayerTwoPlayerFour.add(field14.getText());
+                PlayerTwoPlayerFour.add(field15.getText());
+                
+                doubleS.add(field7DB.getText());
+                doubleS.add(field8DB.getText());
+                doubleS.add(field9DB.getText());
+                
+                matches.add(new Match.Match(awayTeamSelection.getValue(),homeTeamSelection.getValue(),playerTeamAway,playerTeamHome,PlayerOnePlayerThree,PlayerTwoPlayerThree,PlayerOnePlayerFour,PlayerTwoPlayerFour,doubleS));
                 break;
             }
             else{
@@ -160,12 +251,6 @@ public class ScoreSheetController implements Initializable {
             }
         }
         }
-       
-    }
-
-    @FXML
-    void calculateScores(ActionEvent event) {
-
     }
     
     @Override
