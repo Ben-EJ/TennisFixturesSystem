@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -16,22 +17,25 @@
       <Label layoutX="229.0" layoutY="78.0" text="Home Team" />
       <ComboBox fx:id="awayTeamSelection" layoutX="543.0" layoutY="74.0" prefWidth="150.0" promptText="Away Team" />
       <ComboBox fx:id="homeTeamSelection" layoutX="306.0" layoutY="74.0" prefWidth="150.0" promptText="Home team" />
-      <TextField fx:id="field1" layoutX="389.0" layoutY="180.0" />
-      <TextField fx:id="field2" layoutX="389.0" layoutY="217.0" />
-      <TextField fx:id="field3" layoutX="389.0" layoutY="262.0" />
-      <TextField fx:id="field4" layoutX="389.0" layoutY="302.0" />
-      <TextField fx:id="field5" layoutX="389.0" layoutY="346.0" />
-      <TextField fx:id="field6" layoutX="389.0" layoutY="387.0" />
-      <TextField fx:id="field7DB" layoutX="389.0" layoutY="428.0" />
-      <TextField fx:id="field9DB" layoutX="389.0" layoutY="500.0" />
-      <TextField fx:id="field15" layoutX="550.0" layoutY="387.0" />
-      <TextField fx:id="field8DB" layoutX="389.0" layoutY="461.0" />
-      <TextArea layoutX="550.0" layoutY="427.0" prefHeight="104.0" prefWidth="168.0" />
-      <TextField fx:id="field10" layoutX="550.0" layoutY="180.0" />
-      <TextField fx:id="field11" layoutX="550.0" layoutY="217.0" />
-      <TextField fx:id="field12" layoutX="550.0" layoutY="262.0" />
-      <TextField fx:id="field13" layoutX="550.0" layoutY="302.0" />
-      <TextField fx:id="field14" layoutX="550.0" layoutY="346.0" />
+      <TextField fx:id="field1" layoutX="389.0" layoutY="180.0" promptText="A:H" />
+      <TextField fx:id="field2" layoutX="389.0" layoutY="217.0" promptText="A:H" />
+      <TextField fx:id="field3" layoutX="389.0" layoutY="262.0" promptText="A:H" />
+      <TextField fx:id="field4" layoutX="389.0" layoutY="302.0" promptText="A:H" />
+      <TextField fx:id="field5" layoutX="389.0" layoutY="346.0" promptText="A:H" />
+      <TextField fx:id="field6" layoutX="389.0" layoutY="387.0" promptText="A:H" />
+      <TextField fx:id="field7DB" layoutX="389.0" layoutY="428.0" promptText="A:H" />
+      <TextField fx:id="field9DB" layoutX="389.0" layoutY="500.0" promptText="A:H" />
+      <TextField fx:id="field15" layoutX="550.0" layoutY="387.0" promptText="A:H" />
+      <TextField fx:id="field8DB" layoutX="389.0" layoutY="461.0" promptText="A:H" />
+      <TextArea layoutX="550.0" layoutY="427.0" prefHeight="104.0" prefWidth="168.0" promptText="Final Score">
+         <font>
+            <Font size="27.0" />
+         </font></TextArea>
+      <TextField fx:id="field10" layoutX="550.0" layoutY="180.0" promptText="A:H" />
+      <TextField fx:id="field11" layoutX="550.0" layoutY="217.0" promptText="A:H" />
+      <TextField fx:id="field12" layoutX="550.0" layoutY="262.0" promptText="A:H" />
+      <TextField fx:id="field13" layoutX="550.0" layoutY="302.0" promptText="A:H" />
+      <TextField fx:id="field14" layoutX="550.0" layoutY="346.0" promptText="A:H" />
       <ComboBox fx:id="awayPlayerOne" layoutX="389.0" layoutY="132.0" prefWidth="150.0" promptText="Away Player" />
       <ComboBox fx:id="homePlayerTwo" layoutX="229.0" layoutY="302.0" prefWidth="150.0" promptText="Home Player" />
       <Button layoutX="120.0" layoutY="24.0" mnemonicParsing="false" onAction="#modifyScoreSheet" text="Modify sheet" />

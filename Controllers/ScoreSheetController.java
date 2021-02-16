@@ -204,7 +204,19 @@ public class ScoreSheetController implements Initializable {
                 field8DB.setText("");
                 field9DB.setText("");
     }
-
+    public String matchWon(String data){
+        String winLoss = "loss";
+        for(int l = 0; l < 3; l++){
+            String[] splitResult = data.split(":");
+            
+            if (Integer.parseInt(splitResult[0]) < Integer.parseInt(splitResult[1])){
+                return "Win";
+            }
+        }
+        return winLoss;
+    }
+                        
+    
     @FXML
     void calculateScores(ActionEvent event) {
         System.out.println("Calculate And Save");
@@ -223,7 +235,12 @@ public class ScoreSheetController implements Initializable {
                         ArrayList<String> PlayerTwoPlayerThree = new ArrayList<String>();
                         ArrayList<String> PlayerOnePlayerFour = new ArrayList<String>();
                         ArrayList<String> PlayerTwoPlayerFour = new ArrayList<String>();
-    
+                        
+                        ArrayList<String> tempWinPlayerOnePlayerThree = new ArrayList<String>();
+                        ArrayList<String> tempWinPlayerTwoPlayerThree = new ArrayList<String>();
+                        ArrayList<String> tempWinPlayerOnePlayerFour = new ArrayList<String>();
+                        ArrayList<String> tempWinPlayerTwoPlayerFour = new ArrayList<String>();
+                        
                         ArrayList<String> doubleS = new ArrayList<String>();
     
                         playerTeamAway.add(awayPlayerOne.getValue());
@@ -252,7 +269,33 @@ public class ScoreSheetController implements Initializable {
                         doubleS.add(field9DB.getText());
                 
                         matches.add(new Match.Match(awayTeamSelection.getValue(),homeTeamSelection.getValue(),playerTeamAway,playerTeamHome,PlayerOnePlayerThree,PlayerTwoPlayerThree,PlayerOnePlayerFour,PlayerTwoPlayerFour,doubleS));
+                        
+                        for (int u = 0; u < 2; u++){
+                            String temp = matches.get(matches.size()).getPlayerOneVsPlayerThree().get(u);
+                            tempWinPlayerOnePlayerThree.add(matchWon(temp)); 
+                        }
+                        for (int y = 0; y < 2; y++){
+                            String temp = matches.get(matches.size()).getPlayerTwoVsPlayerThree().get(y);
+                            tempWinPlayerTwoPlayerThree.add(matchWon(temp)); 
+                        }
+                        for (int h = 0; h < 2; h++){
+                            String temp = matches.get(matches.size()).getPlayerOneVsPlayerFour().get(h);
+                            tempWinPlayerOnePlayerFour.add(matchWon(temp)); 
+                        }
+                        for (int c = 0; c < 2; c++){
+                            String temp = matches.get(matches.size()).getPlayerTwoVsPlayerFour().get(c);
+                            tempWinPlayerTwoPlayerFour.add(matchWon(temp)); 
+                        }
+                        
+                        matches.get(matches.size()).setAwayWinPlayerOneVsPlayerThree(tempWinPlayerOnePlayerThree);
+                        matches.get(matches.size()).setAwayWinPlayerTwoVsPlayerThree(tempWinPlayerTwoPlayerThree);
+                        
+                        matches.get(matches.size()).setAwayWinPlayerOneVsPlayerFour(tempWinPlayerOnePlayerFour);
+                        matches.get(matches.size()).setAwayWinPlayerTwoVsPlayerFour(tempWinPlayerTwoPlayerFour);
+                        
+                        
                         break;
+                        
                         }
                     else{
                         System.out.println("Does not exist");
@@ -282,6 +325,7 @@ public class ScoreSheetController implements Initializable {
                 matches.get(editNumber).setDoubleSets(field8DB.getText(), 1);
                 matches.get(editNumber).setDoubleSets(field9DB.getText(), 2);
                 editMode = false;
+                
         }
         
     }
