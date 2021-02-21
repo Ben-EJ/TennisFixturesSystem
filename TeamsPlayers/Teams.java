@@ -16,6 +16,10 @@ public class Teams {
     private String teamName;
     private int teamNumber;
     
+    private int matchesPlayed;
+    private int matchesWon;
+    private int setsWon;
+    
     private List<Players> players = new ArrayList<Players>();
      
     
@@ -36,5 +40,39 @@ public class Teams {
     
     public void setPlayers(String name, int playerNumber){
         players.add(new Players(name, playerNumber));
+    }
+    
+    public int getMatchesPlayed(){
+        return matchesPlayed;
+    }
+    public int getMatchesWon(){
+        return matchesWon;
+    }
+    public int getSetsWon(){
+        return setsWon;
+    }
+    
+    public void setMatchesPlayed(int numToAdd){
+        matchesPlayed = numToAdd;
+    }
+    
+    public void addMatchesPlayed(int numToAdd){
+        matchesPlayed += numToAdd;
+    }
+    public void addMatchesWon(int numToAdd){
+        matchesWon += numToAdd;
+    }
+    public void addSetsWon(int numToAdd){
+        setsWon  += numToAdd;
+    }
+    
+     public void subMatchesPlayed(int numToSub){
+        matchesPlayed -= numToSub;
+    }
+    public void subMatchesWon(int numToSub){
+        matchesWon -= numToSub;
+    }
+    public void subSetsWon(int numToSub){
+        setsWon -= numToSub;
     }
 }

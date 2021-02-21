@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -95,20 +96,32 @@ public class ScoreSheetController implements Initializable {
     @FXML
     private ComboBox<String> homePlayerTwo;
     
+    @FXML
+    private TextArea finalScore;
     public static List<Match.Match> ScoreSheet = new ArrayList<Match.Match>();
     
-    @FXML
-    void updateDropdownTeams(ActionEvent event) {
-        System.out.println("updateTeamList");         
+    public void teamsLoad(){
         ObservableList<String> TeamSelectionText = FXCollections.observableArrayList(AdminPageController.teamsAlreadyAdded);
         homeTeamSelection.setItems(TeamSelectionText);
         awayTeamSelection.setItems(TeamSelectionText);
     }
-    @FXML
-    void updateDropdownPlayers(ActionEvent event) {
+    public void teamPlayersLoad(int homeAwayTeamSelect){
         List<String> playersHome = new ArrayList<String>();
         List<String> playersAway = new ArrayList<String>();
-        for (int i = 0; i < AdminPageController.teams.size(); i++){
+        System.out.println("Start Load Players");
+        if (homeAwayTeamSelect == 0){
+             for (int i = 0; i < AdminPageController.teams.size(); i++){
+                if (AdminPageController.teams.get(i).getTeamName().equals(homeTeamSelection.getValue())){
+                    for(int z = 0; z < AdminPageController.teams.get(i).getPlayers().size(); z++){
+                        playersHome.add(AdminPageController.teams.get(i).getPlayers().get(z).getNamePlayer()); 
+                    }
+                    ObservableList<String> playerSelectionTextHome = FXCollections.observableArrayList(playersHome);
+                    homePlayerOne.setItems(playerSelectionTextHome);
+                    homePlayerTwo.setItems(playerSelectionTextHome);
+                }
+        }
+        }else{
+              for (int i = 0; i < AdminPageController.teams.size(); i++){
             
                if (AdminPageController.teams.get(i).getTeamName().equals(awayTeamSelection.getValue())){
                    for(int x = 0; x < AdminPageController.teams.get(i).getPlayers().size(); x++){
@@ -120,32 +133,84 @@ public class ScoreSheetController implements Initializable {
           
             }
         }
-        for (int i = 0; i < AdminPageController.teams.size(); i++){
-          if (AdminPageController.teams.get(i).getTeamName().equals(homeTeamSelection.getValue())){
-                    for(int z = 0; z < AdminPageController.teams.get(i).getPlayers().size(); z++){
-                        playersHome.add(AdminPageController.teams.get(i).getPlayers().get(z).getNamePlayer()); 
-                    }
-                    ObservableList<String> playerSelectionTextHome = FXCollections.observableArrayList(playersHome);
-                    homePlayerOne.setItems(playerSelectionTextHome);
-                    homePlayerTwo.setItems(playerSelectionTextHome);
-                }
         }
+        System.out.println("End Load Players");
+    }
+    
+     @FXML
+    void comboBoxAwayTeam(Event event) {
+        teamsLoad();
+    }
+
+    @FXML
+    void comboBoxHomeTeam(Event event) {
+        teamsLoad();
+    }
+    
+    @FXML
+    void comboBoxAwayTeamPlayersOne(Event event) {
+       teamPlayersLoad(1);
+    }
+    
+    @FXML
+    void comboBoxAwayTeamPlayersTwo(Event event) {
+       teamPlayersLoad(1);
+    }
+    
+    @FXML
+    void comboBoxHomeTeamPlayersOne(Event event) {
+         teamPlayersLoad(0);
+    }
+    
+     @FXML
+    void comboBoxHomeTeamPlayersTwo(Event event) {
+         teamPlayersLoad(0);
     }
     
     public static ArrayList<Match.Match> matches = new ArrayList<Match.Match>();
     public boolean editMode = false;
     public int editNumber = 0;      
     
+    private void testModifyScoreSheet(int i){
+            System.out.println(" ");
+            System.out.println("Matches " + matches.get(i).getTeamAway() + " Combo: " + awayTeamSelection.getValue());
+            System.out.println("Matches " + matches.get(i).getTeamHome() + " Combo: " + homeTeamSelection.getValue());
+            System.out.println("Matches " + matches.get(i).getPlayersTeamAway().get(0) + " Combo: " + awayPlayerOne.getValue());
+            System.out.println("Matches " + matches.get(i).getPlayersTeamAway().get(1) + " Combo: " + awayPlayerTwo.getValue());
+            System.out.println("Matches " + matches.get(i).getPlayersTeamHome().get(0) + " Combo: " + homePlayerOne.getValue());
+            System.out.println("Matches " + matches.get(i).getPlayersTeamHome().get(1) + " Combo: " + homePlayerTwo.getValue());
+            System.out.println(" ");
+            if (matches.get(i).getTeamAway().equalsIgnoreCase(awayTeamSelection.getValue())){
+                System.out.println("TEST ONE PASS");
+            }
+            if (matches.get(i).getTeamHome().equalsIgnoreCase(homeTeamSelection.getValue())){
+                System.out.println("TEST TWO PASS");
+            }
+            if (matches.get(i).getPlayersTeamAway().get(0).equalsIgnoreCase(awayPlayerOne.getValue())){
+                System.out.println("TEST THREE PASS");
+            }
+            if ( matches.get(i).getPlayersTeamAway().get(1).equalsIgnoreCase(awayPlayerTwo.getValue())){
+                System.out.println("TEST FOUR PASS");
+            }
+            if (matches.get(i).getPlayersTeamHome().get(0).equalsIgnoreCase(homePlayerOne.getValue())){
+                System.out.println("TEST FIVE PASS");
+            }
+            if (matches.get(i).getPlayersTeamHome().get(1).equalsIgnoreCase(homePlayerTwo.getValue())){
+                System.out.println("TEST SIX PASS");
+            }
+    }
+    
     @FXML
     void modifyScoreSheet(ActionEvent event) {
         boolean found = false;
-        for (int i = 0; i < matches.size(); i++){
-            if(matches.get(i).getTeamAway().equals(awayTeamSelection.getValue()) 
-            && matches.get(i).getTeamHome().equals(homeTeamSelection.getValue())  
-            && matches.get(i).getPlayersTeamAway().get(0).equals(awayPlayerOne.getValue()) 
-            && matches.get(i).getPlayersTeamAway().get(1).equals(awayPlayerTwo.getValue()) 
-            && matches.get(i).getPlayersTeamHome().get(0).equals(homePlayerOne.getValue())
-            && matches.get(i).getPlayersTeamHome().get(1).equals(homePlayerTwo.getValue()))     
+        for (int i = 0; i < matches.size(); i++){     
+            //testModifyScoreSheet(i);
+            if(matches.get(i).getTeamAway().equalsIgnoreCase(awayTeamSelection.getValue()) 
+            && matches.get(i).getTeamHome().equalsIgnoreCase(homeTeamSelection.getValue())  
+            && matches.get(i).getPlayersTeamAway().get(0).equalsIgnoreCase(awayPlayerOne.getValue()) 
+            && matches.get(i).getPlayersTeamAway().get(1).equalsIgnoreCase(awayPlayerTwo.getValue()) 
+            && matches.get(i).getPlayersTeamHome().get(0).equalsIgnoreCase(homePlayerOne.getValue())
+            && matches.get(i).getPlayersTeamHome().get(1).equalsIgnoreCase(homePlayerTwo.getValue()))     
             {
                 editMode = true;
                 editNumber = i;
@@ -181,7 +246,6 @@ public class ScoreSheetController implements Initializable {
         }
     }
     
-   
     @FXML
     void newScoreSheet(ActionEvent event) {
                 field1.setText("");
@@ -203,19 +267,117 @@ public class ScoreSheetController implements Initializable {
                 field7DB.setText("");
                 field8DB.setText("");
                 field9DB.setText("");
+                
+                finalScore.setText("");
+                
+                homeTeamSelection.setValue("");
+                awayTeamSelection.setValue("");
+                
+                awayPlayerOne.setValue("");
+                awayPlayerTwo.setValue("");
+                
+                homePlayerOne.setValue("");
+                homePlayerTwo.setValue("");
+                
+                homeTeamSelection.setPromptText("Home team");
+                awayTeamSelection.setPromptText("Away team");
+                
+                awayPlayerOne.setPromptText("Away Player");
+                awayPlayerTwo.setPromptText("Away Player");
+                
+                homePlayerOne.setPromptText("Home Player");
+                homePlayerTwo.setPromptText("Home Player");
     }
-    public String matchWon(String data){
+    public String gameWon(String data){
         String winLoss = "loss";
         for(int l = 0; l < 3; l++){
             String[] splitResult = data.split(":");
             
-            if (Integer.parseInt(splitResult[0]) < Integer.parseInt(splitResult[1])){
+            if (Integer.parseInt(splitResult[0]) > Integer.parseInt(splitResult[1])){
                 return "Win";
             }
         }
         return winLoss;
     }
+    public String winSet(ArrayList<String> gameScores){
+         int teamOne = 0;
+         int teamTwo = 0;
+         for (int winLoss = 0; winLoss < gameScores.size(); winLoss++){
+            
+            if(gameScores.get(winLoss).equals("Win")){
+                teamOne += 1;
+            }else
+            {
+                teamTwo += 1;
+            }
+        }
+        if(teamOne > teamTwo){
+            return "Win";
+        }else if(teamOne < teamTwo)
+        {
+            return "loss";
+        }else{
+            return "draw";
+        }
+    }                    
+    public String finalMatchScores(ArrayList<String> setWins){
+        int teamOne = 0;
+        int teamTwo = 0;
+        
+        for (int i = 0; i < setWins.size(); i++){
+            if(setWins.get(i).equals("Win")){
+                teamOne += 1;
+            }
+            else{
+                teamTwo +=1;
+            }
+        }
+        return teamOne + ":" + teamTwo;
+    }
+    public void calculateAll(int matchToEdit, String teamOne, String teamTwo){
+        ArrayList<String> tempWinPlayerOnePlayerThree = new ArrayList<String>();
+        ArrayList<String> tempWinPlayerTwoPlayerThree = new ArrayList<String>();
+        ArrayList<String> tempWinPlayerOnePlayerFour = new ArrayList<String>();
+        ArrayList<String> tempWinPlayerTwoPlayerFour = new ArrayList<String>();
+        ArrayList<String> tempWinDoubleSet = new ArrayList<String>();
+        matches.get(editNumber).clearSetWins();
+        for (int u = 0; u < 2; u++){
+                            String temp = matches.get(matchToEdit).getPlayerOneVsPlayerThree().get(u);
+                            tempWinPlayerOnePlayerThree.add(gameWon(temp)); 
+                        }
+                        for (int y = 0; y < 2; y++){
+                            String temp = matches.get(matchToEdit).getPlayerTwoVsPlayerThree().get(y);
+                            tempWinPlayerTwoPlayerThree.add(gameWon(temp)); 
+                        }
+                        for (int h = 0; h < 2; h++){
+                            String temp = matches.get(matchToEdit).getPlayerOneVsPlayerFour().get(h);
+                            tempWinPlayerOnePlayerFour.add(gameWon(temp)); 
+                        }
+                        for (int c = 0; c < 2; c++){
+                            String temp = matches.get(matchToEdit).getPlayerTwoVsPlayerFour().get(c);
+                            tempWinPlayerTwoPlayerFour.add(gameWon(temp)); 
+                        }
+                        for (int f = 0; f < 2; f++){
+                            String temp = matches.get(matchToEdit).getDoubleSets().get(f);
+                            tempWinDoubleSet.add(gameWon(temp)); 
+                        }
                         
+                        matches.get(matchToEdit).setHomeWinPlayerOneVsPlayerThree(tempWinPlayerOnePlayerThree);
+                        matches.get(matchToEdit).setHomeWinPlayerTwoVsPlayerThree(tempWinPlayerTwoPlayerThree);
+                        matches.get(matchToEdit).setHomeWinPlayerOneVsPlayerFour(tempWinPlayerOnePlayerFour);
+                        matches.get(matchToEdit).setHomeWinPlayerTwoVsPlayerFour(tempWinPlayerTwoPlayerFour);
+                        matches.get(matchToEdit).setHomeWinDoubleSets(tempWinDoubleSet);
+                        
+                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerOneVsPlayerThree()));
+                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerTwoVsPlayerThree()));
+                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerOneVsPlayerFour()));
+                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerTwoVsPlayerFour()));
+                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinDoubleSets()));
+                        
+                        matches.get(matchToEdit).setMatchScore(finalMatchScores(matches.get(matchToEdit).getSetWins()));
+                        
+                        finalScore.setText(matches.get(matchToEdit).getMatchScore());
+    }
     
     @FXML
     void calculateScores(ActionEvent event) {
@@ -235,13 +397,14 @@ public class ScoreSheetController implements Initializable {
                         ArrayList<String> PlayerTwoPlayerThree = new ArrayList<String>();
                         ArrayList<String> PlayerOnePlayerFour = new ArrayList<String>();
                         ArrayList<String> PlayerTwoPlayerFour = new ArrayList<String>();
+                        ArrayList<String> doubleS = new ArrayList<String>();
                         
                         ArrayList<String> tempWinPlayerOnePlayerThree = new ArrayList<String>();
                         ArrayList<String> tempWinPlayerTwoPlayerThree = new ArrayList<String>();
                         ArrayList<String> tempWinPlayerOnePlayerFour = new ArrayList<String>();
                         ArrayList<String> tempWinPlayerTwoPlayerFour = new ArrayList<String>();
+                        ArrayList<String> tempWinDoubleSet = new ArrayList<String>();
                         
-                        ArrayList<String> doubleS = new ArrayList<String>();
     
                         playerTeamAway.add(awayPlayerOne.getValue());
                         playerTeamAway.add(awayPlayerTwo.getValue()); 
@@ -270,29 +433,7 @@ public class ScoreSheetController implements Initializable {
                 
                         matches.add(new Match.Match(awayTeamSelection.getValue(),homeTeamSelection.getValue(),playerTeamAway,playerTeamHome,PlayerOnePlayerThree,PlayerTwoPlayerThree,PlayerOnePlayerFour,PlayerTwoPlayerFour,doubleS));
                         
-                        for (int u = 0; u < 2; u++){
-                            String temp = matches.get(matches.size()).getPlayerOneVsPlayerThree().get(u);
-                            tempWinPlayerOnePlayerThree.add(matchWon(temp)); 
-                        }
-                        for (int y = 0; y < 2; y++){
-                            String temp = matches.get(matches.size()).getPlayerTwoVsPlayerThree().get(y);
-                            tempWinPlayerTwoPlayerThree.add(matchWon(temp)); 
-                        }
-                        for (int h = 0; h < 2; h++){
-                            String temp = matches.get(matches.size()).getPlayerOneVsPlayerFour().get(h);
-                            tempWinPlayerOnePlayerFour.add(matchWon(temp)); 
-                        }
-                        for (int c = 0; c < 2; c++){
-                            String temp = matches.get(matches.size()).getPlayerTwoVsPlayerFour().get(c);
-                            tempWinPlayerTwoPlayerFour.add(matchWon(temp)); 
-                        }
-                        
-                        matches.get(matches.size()).setAwayWinPlayerOneVsPlayerThree(tempWinPlayerOnePlayerThree);
-                        matches.get(matches.size()).setAwayWinPlayerTwoVsPlayerThree(tempWinPlayerTwoPlayerThree);
-                        
-                        matches.get(matches.size()).setAwayWinPlayerOneVsPlayerFour(tempWinPlayerOnePlayerFour);
-                        matches.get(matches.size()).setAwayWinPlayerTwoVsPlayerFour(tempWinPlayerTwoPlayerFour);
-                        
+                        calculateAll(matches.size() - 1,awayTeamSelection.getValue(),homeTeamSelection.getValue());
                         
                         break;
                         
@@ -304,7 +445,7 @@ public class ScoreSheetController implements Initializable {
             }
         }
         else if(editMode == true){
-                System.out.print("Edit Made");
+                
                 matches.get(editNumber).setPlayerOneVsPlayerThree(field1.getText(), 0);
                 matches.get(editNumber).setPlayerOneVsPlayerThree(field2.getText(), 1);
                 matches.get(editNumber).setPlayerOneVsPlayerThree(field3.getText(), 2);
@@ -324,6 +465,9 @@ public class ScoreSheetController implements Initializable {
                 matches.get(editNumber).setDoubleSets(field7DB.getText(), 0);
                 matches.get(editNumber).setDoubleSets(field8DB.getText(), 1);
                 matches.get(editNumber).setDoubleSets(field9DB.getText(), 2);
+                
+                calculateAll(editNumber,matches.get(editNumber).getTeamAway(),matches.get(editNumber).getTeamHome());
+                System.out.print("Edit Made");
                 editMode = false;
                 
         }
@@ -332,7 +476,7 @@ public class ScoreSheetController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       
     }    
     
 }

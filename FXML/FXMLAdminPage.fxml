@@ -18,9 +18,8 @@
       <TextField fx:id="teamNameField" layoutX="185.0" layoutY="41.0" prefHeight="24.0" prefWidth="268.0" />
       <Label layoutX="24.0" layoutY="101.0" text="Enter New Player Name" />
       <Label layoutX="26.0" layoutY="45.0" text="Enter New Team Name" />
-      <ComboBox fx:id="dropDownTeamName" layoutX="334.0" layoutY="97.0" prefWidth="150.0" promptText="Select Team name" />
+      <ComboBox fx:id="dropDownTeamName" layoutX="334.0" layoutY="97.0" onShowing="#dropDownTeamNameOnShowing" prefWidth="150.0" promptText="Select Team name" />
       <Button layoutX="501.0" layoutY="97.0" mnemonicParsing="false" onAction="#registerPlayer" text="Register Player" />
       <Button layoutX="501.0" layoutY="41.0" mnemonicParsing="false" onAction="#addTeam" text="Add Team" />
-      <Button layoutX="375.0" layoutY="128.0" mnemonicParsing="false" onAction="#updateTeamList" text="Update Team List" />
    </children>
 </AnchorPane>

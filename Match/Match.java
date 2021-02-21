@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class Match {
     private int matchNumber = 0;
-    private boolean matchStatus = false;
+ 
     private String teamOne = "";
     private String teamTwo = "";
     
@@ -22,26 +22,25 @@ public class Match {
     private ArrayList<String> PlayersTeamHome = new ArrayList<String>();
     
     private ArrayList<String> PlayerOneVsPlayerThree = new ArrayList<String>();
-    private ArrayList<String> awayWinPlayerOneVsPlayerThree = new ArrayList<String>();
-    private boolean setWinAwayPlayerOneVsPlayerThree = false;
-    
-    
+    private ArrayList<String> homeWinPlayerOneVsPlayerThree = new ArrayList<String>();
+  
     private ArrayList<String> PlayerTwoVsPlayerThree = new ArrayList<String>();
-    private ArrayList<String> awayWinPlayerTwoVsPlayerThree = new ArrayList<String>();
-    private boolean setWinAwayPlayerTwoVsPlayerThree = false;
+    private ArrayList<String> homeWinPlayerTwoVsPlayerThree = new ArrayList<String>();
+   
     
     private ArrayList<String> PlayerOneVsPlayerFour = new ArrayList<String>();
-    private ArrayList<String> awayWinPlayerOneVsPlayerFour = new ArrayList<String>();
-    private boolean setWinAwayPlayerOneVsPlayerFour = false;
+    private ArrayList<String> homeWinPlayerOneVsPlayerFour = new ArrayList<String>();
+
     
     private ArrayList<String> PlayerTwoVsPlayerFour = new ArrayList<String>();
-    private ArrayList<String> awayWinPlayerTwoVsPlayerFour = new ArrayList<String>();
-    private boolean setWinAwayPlayerTwoVsPlayerFour = false;
+    private ArrayList<String> homeWinPlayerTwoVsPlayerFour = new ArrayList<String>();
+
     
     private ArrayList<String> doubleSets = new ArrayList<String>();
-    private ArrayList<String> awayWinDoubleSets  = new ArrayList<String>();
-    private boolean setWinAwayDoubleSets = false;
-    
+    private ArrayList<String> homeWinDoubleSets  = new ArrayList<String>();
+  
+    private ArrayList<String> setWins = new ArrayList<String>();
+    private String matchScore;
     
     public Match(String team1, String team2,ArrayList<String> PlayersAway, ArrayList<String> PlayersHome, ArrayList<String> PlayerOnePlayerThree,ArrayList<String> PlayerTwoPlayerThree, ArrayList<String> PlayerOnePlayerFour,ArrayList<String> PlayerTwoPlayerFour, ArrayList<String> doubleS){
         teamOne = team1;
@@ -111,74 +110,59 @@ public class Match {
         doubleSets.set(valueToChange, valueToChangeTo); 
     }
     
-    public ArrayList<String> getAwayWinPlayerOneVsPlayerThree(){
-        return awayWinPlayerOneVsPlayerThree;
+    public ArrayList<String> getHomeWinPlayerOneVsPlayerThree(){
+        return homeWinPlayerOneVsPlayerThree;
     }
-    public ArrayList<String> getAwayWinPlayerTwoVsPlayerThree(){
-        return awayWinPlayerTwoVsPlayerThree;
+    public ArrayList<String> getHomeWinPlayerTwoVsPlayerThree(){
+        return homeWinPlayerTwoVsPlayerThree;
     }
-    public ArrayList<String> getAwayWinPlayerOneVsPlayerFour(){
-        return awayWinPlayerOneVsPlayerFour;
+    public ArrayList<String> getHomeWinPlayerOneVsPlayerFour(){
+        return homeWinPlayerOneVsPlayerFour;
     }
-    public ArrayList<String> getAwayWinPlayerTwoVsPlayerFour(){
-        return awayWinPlayerTwoVsPlayerFour;
-    }
-    
-    public ArrayList<String> getAwayWinDoubleSets(){
-        return awayWinDoubleSets;
+    public ArrayList<String> getHomeWinPlayerTwoVsPlayerFour(){
+        return homeWinPlayerTwoVsPlayerFour;
     }
     
-    public void setAwayWinPlayerOneVsPlayerThree(ArrayList<String> trueOrFalse){
-        awayWinPlayerOneVsPlayerThree = trueOrFalse;
-    }
-    public void setAwayWinPlayerTwoVsPlayerThree(ArrayList<String> trueOrFalse){
-        awayWinPlayerTwoVsPlayerThree = trueOrFalse;
-    }
-    public void setAwayWinPlayerOneVsPlayerFour(ArrayList<String> trueOrFalse){
-        awayWinPlayerOneVsPlayerFour = trueOrFalse;
-    }
-    public void setAwayWinPlayerTwoVsPlayerFour(ArrayList<String> trueOrFalse){
-        awayWinPlayerTwoVsPlayerFour = trueOrFalse;
+    public ArrayList<String> getHomeWinDoubleSets(){
+        return homeWinDoubleSets;
     }
     
-    public void setAwayWinDoubleSets(ArrayList<String> trueOrFalse){
-        awayWinDoubleSets = trueOrFalse;
+    public void setHomeWinPlayerOneVsPlayerThree(ArrayList<String> trueOrFalse){
+        homeWinPlayerOneVsPlayerThree = trueOrFalse;
+    }
+    public void setHomeWinPlayerTwoVsPlayerThree(ArrayList<String> trueOrFalse){
+        homeWinPlayerTwoVsPlayerThree = trueOrFalse;
+    }
+    public void setHomeWinPlayerOneVsPlayerFour(ArrayList<String> trueOrFalse){
+        homeWinPlayerOneVsPlayerFour = trueOrFalse;
+    }
+    public void setHomeWinPlayerTwoVsPlayerFour(ArrayList<String> trueOrFalse){
+        homeWinPlayerTwoVsPlayerFour = trueOrFalse;
     }
     
-    
-    
-    public boolean setSetWinAwayPlayerOneVsPlayerThree(){
-        return setWinAwayPlayerOneVsPlayerThree;
-    }
-    public boolean setAwayWinPlayerTwoVsPlayerThree(){
-       return setWinAwayPlayerTwoVsPlayerThree;
-    }
-    public boolean setAwayWinPlayerOneVsPlayerFour(){
-       return setWinAwayPlayerOneVsPlayerFour;
-    }
-    public boolean setAwayWinPlayerTwoVsPlayerFour(){
-       return setWinAwayPlayerTwoVsPlayerFour;
-    }
-    
-    public boolean setAwayWinDoubleSets(){
-        return setWinAwayDoubleSets;
+    public void setHomeWinDoubleSets(ArrayList<String> trueOrFalse){
+        homeWinDoubleSets = trueOrFalse;
     }
     
     
-    public void setSetWinAwayPlayerOneVsPlayerThree(boolean trueOrFalse){
-        setWinAwayPlayerOneVsPlayerThree = trueOrFalse;
+    
+    public ArrayList<String> getSetWins(){
+        return setWins;
     }
-    public void setAwayWinPlayerTwoVsPlayerThree(boolean trueOrFalse){
-        setWinAwayPlayerTwoVsPlayerThree = trueOrFalse;
+
+    public void setSetWins (String trueOrFalse){
+        setWins.add(trueOrFalse);
     }
-    public void setAwayWinPlayerOneVsPlayerFour(boolean trueOrFalse){
-       setWinAwayPlayerOneVsPlayerFour = trueOrFalse;
-    }
-    public void setAwayWinPlayerTwoVsPlayerFour(boolean trueOrFalse){
-       setWinAwayPlayerTwoVsPlayerFour = trueOrFalse;
+    public void clearSetWins (){
+        setWins.clear();
     }
     
-    public void setAwayWinDoubleSets(boolean trueOrFalse){
-        setWinAwayDoubleSets = trueOrFalse;
+    public String getMatchScore(){
+        return matchScore;
     }
+
+    public void setMatchScore (String trueOrFalse){
+        matchScore = trueOrFalse;
+    }
+  
 }

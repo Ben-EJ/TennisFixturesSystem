@@ -5,7 +5,9 @@
  */
 package Controllers;
 
+import Csv.CSV;
 import Login.Login;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +129,14 @@ public class MainController extends Thread implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try {
+           // TODO
+           CSV.csvInputTeamsAndPlayers("src/Csv/DataTeamsAndPlayers.csv");
+           CSV.csvInputScoreSheets("src/Csv/DataScoreSheetsOne.csv");
+           CSV.csvInputScoreSheets("src/Csv/DataScoreSheetsTwo.csv");
+       } catch (IOException ex) {
+           System.out.println("Error adding CSV file data");
+       }
     }    
     
 }

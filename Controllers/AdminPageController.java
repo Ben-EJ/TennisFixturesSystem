@@ -5,14 +5,23 @@
  */
 package Controllers;
 
+import Csv.CSV;
 import Login.Login;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -66,7 +75,7 @@ public class AdminPageController extends Thread implements Initializable {
     }
     
     @FXML
-    void updateTeamList(ActionEvent event) {
+    void dropDownTeamNameOnShowing(Event event) {
         System.out.println("updateTeamList");         
         ObservableList<String> teamsComboContent = FXCollections.observableArrayList(teamsAlreadyAdded);
         dropDownTeamName.setItems(teamsComboContent);
@@ -137,49 +146,55 @@ public class AdminPageController extends Thread implements Initializable {
             cantGenerateFixtures.showAndWait();
         }
     }
-
-    @FXML
-    void generateTeamStats(ActionEvent event) {
-        System.out.println("generateTeamStats");
-        testData();
-    }
-    
-    public void testData(){
-        teams.add(new TeamsPlayers.Teams("Filton", 1));
-        teams.add(new TeamsPlayers.Teams("UWE", 2));
-        teams.add(new TeamsPlayers.Teams("KCC", 3));
-        teams.add(new TeamsPlayers.Teams("Page", 4));
-        
-        teamsAlreadyAdded.add("Filton");
-        teamsAlreadyAdded.add("UWE");
-        teamsAlreadyAdded.add("KCC");
-        teamsAlreadyAdded.add("Page");
-        
-        teams.get(0).setPlayers("Alex", 1);
-        teams.get(0).setPlayers("Brian", 2);
-        
-        teams.get(1).setPlayers("Jin", 1);
-        teams.get(1).setPlayers("Julia", 2);
-        teams.get(1).setPlayers("Stewart", 3);
-        
-        teams.get(2).setPlayers("Chris", 1);
-        teams.get(2).setPlayers("Ryan", 2);
-        
-        teams.get(3).setPlayers("Peter", 1);
-        teams.get(3).setPlayers("Phil", 2);
-        
-        for(int i = 0; i < teams.size(); i++){
-            System.out.println(teams.get(i).getTeamName());
-            for (int x = 0; x < teams.get(i).getPlayers().size(); x++){
-                System.out.println(teams.get(i).getPlayers().get(x).getNamePlayer());
+    public int getTeamNumber(String teamName){
+        int teamNumber = 0;
+        for (int i = 0; i < teams.size(); i++){
+            if (teams.get(i).getTeamName().equalsIgnoreCase(teamName)){
+                return i;
             }
-            
         }
+        return teamNumber;
     }
+    @FXML
+    void generateTeamStats(ActionEvent event) throws IOException {
+        System.out.println("generateTeamStats");
+        for (int teamNum = 0 ; teamNum < teams.size();teamNum++){
+            int score = 0;
+            for (int i = 0; i < ScoreSheetController.matches.size(); i++){
+                if (teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(i).getTeamAway()) || teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(i).getTeamHome())){
+                 
+                    for (int x = 0; x < ScoreSheetController.matches.get(i).getSetWins().size(); x++){
+                    if(ScoreSheetController.matches.get(i).getSetWins().get(x).equalsIgnoreCase("Win")){
+                        score += 1;
+                    }
+                    }
+                     if(ScoreSheetController.matches.get(i).getTeamAway().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
+                         teams.get(teamNum).addSetsWon(score);
+                         }
+                      else if(ScoreSheetController.matches.get(i).getTeamHome().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
+                    teams.get(teamNum).addSetsWon(5 - score);
+                    }
+                }
+                
+                
+            }
+            int ammountOfMatches = 0;
+            for (int z = 0; z < ScoreSheetController.matches.size(); z++){
+                if (teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(z).getTeamAway()) || teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(z).getTeamHome())){
+                    ammountOfMatches += 1;
+                }
+            }
+            teams.get(teamNum).setMatchesPlayed(ammountOfMatches);
+        }
+      for (int i = 0; i < teams.size(); i++){
+          System.out.println("Team Name: " + teams.get(i).getTeamName() + " / " + " Matches Played: " + teams.get(i).getMatchesPlayed() + " / " + "Sets Won" + teams.get(i).getSetsWon());
+      }
+    }
+   
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        
+       
     }    
     
 }
