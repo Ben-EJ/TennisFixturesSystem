@@ -155,40 +155,68 @@ public class AdminPageController extends Thread implements Initializable {
         }
         return teamNumber;
     }
-    @FXML
-    void generateTeamStats(ActionEvent event) throws IOException {
-        System.out.println("generateTeamStats");
+    
+    public static void generateTeamStatsFunc(){
+        
+        MainController.teamStats.clear();
         for (int teamNum = 0 ; teamNum < teams.size();teamNum++){
             int score = 0;
+            int wins = 0;
             for (int i = 0; i < ScoreSheetController.matches.size(); i++){
-                if (teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(i).getTeamAway()) || teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(i).getTeamHome())){
+                if (ScoreSheetController.matches.get(i).getMatchComplete() == true){
+                    if (teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(i).getTeamHome()) || teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(i).getTeamAway())){
                  
                     for (int x = 0; x < ScoreSheetController.matches.get(i).getSetWins().size(); x++){
-                    if(ScoreSheetController.matches.get(i).getSetWins().get(x).equalsIgnoreCase("Win")){
-                        score += 1;
+                        if(ScoreSheetController.matches.get(i).getSetWins().get(x).equalsIgnoreCase("Win") && ScoreSheetController.matches.get(i).getTeamHome().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
+                            score += 1;
+                        }
+                        else if (ScoreSheetController.matches.get(i).getSetWins().get(x).equalsIgnoreCase("loss") && ScoreSheetController.matches.get(i).getTeamAway().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
+                            score += 1;
+                        }
                     }
+                    
+                    String matchScore = ScoreSheetController.matches.get(i).getMatchScore();
+                    if(ScoreSheetController.matches.get(i).getTeamHome().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
+                       String[] splitResult = matchScore.split(":");
+                       if (Integer.parseInt(splitResult[0]) > Integer.parseInt(splitResult[1])){
+                          System.out.println("WIN HOME TEAM");
+                          wins += 1;
+                       }
                     }
-                     if(ScoreSheetController.matches.get(i).getTeamAway().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
-                         teams.get(teamNum).addSetsWon(score);
-                         }
-                      else if(ScoreSheetController.matches.get(i).getTeamHome().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
-                    teams.get(teamNum).addSetsWon(5 - score);
+                    else if (ScoreSheetController.matches.get(i).getTeamAway().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
+                        String[] splitResult = matchScore.split(":");
+                        if (Integer.parseInt(splitResult[0]) < Integer.parseInt(splitResult[1])){
+                          System.out.println("WIN Away TEAM");
+                          wins += 1;
+                       }
                     }
-                }
-                
-                
-            }
-            int ammountOfMatches = 0;
-            for (int z = 0; z < ScoreSheetController.matches.size(); z++){
-                if (teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(z).getTeamAway()) || teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(z).getTeamHome())){
-                    ammountOfMatches += 1;
-                }
-            }
-            teams.get(teamNum).setMatchesPlayed(ammountOfMatches);
+                    
+                    if(ScoreSheetController.matches.get(i).getTeamHome().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
+                        teams.get(teamNum).setSetsWon(score);
+                    }
+                    else if(ScoreSheetController.matches.get(i).getTeamAway().equalsIgnoreCase(teams.get(teamNum).getTeamName())){
+                        teams.get(teamNum).setSetsWon(score);
+                    }
+                }         
+            }         
         }
-      for (int i = 0; i < teams.size(); i++){
-          System.out.println("Team Name: " + teams.get(i).getTeamName() + " / " + " Matches Played: " + teams.get(i).getMatchesPlayed() + " / " + "Sets Won" + teams.get(i).getSetsWon());
-      }
+        int ammountOfMatches = 0;
+        for (int z = 0; z < ScoreSheetController.matches.size(); z++){
+            if (teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(z).getTeamHome()) || teams.get(teamNum).getTeamName().equalsIgnoreCase(ScoreSheetController.matches.get(z).getTeamAway())){
+                ammountOfMatches += 1;
+            }
+        }
+        teams.get(teamNum).setMatchesPlayed(ammountOfMatches);
+        
+        MainController.teamStats.add(new TeamsPlayers.TeamStats(teams.get(teamNum).getTeamName(), teams.get(teamNum).getMatchesPlayed(), wins,  teams.get(teamNum).getSetsWon()));
+       
+    }
+    
+}
+    
+    @FXML
+    void generateTeamStats(ActionEvent event) throws IOException {
+       generateTeamStatsFunc();
     }
    
    

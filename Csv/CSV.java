@@ -24,14 +24,14 @@ import java.util.List;
 public class CSV {
      public static void csvInputTeamsAndPlayers(String fileLink) throws FileNotFoundException, IOException{
         List<List<String>> teamsPlayers = new ArrayList<>();
-        try (BufferedReader csvInput = new BufferedReader(new FileReader(fileLink))) {
+        try (BufferedReader csvInput = new BufferedReader(new FileReader(fileLink))) {//get file
             String line;
-        while ((line = csvInput.readLine()) != null) {
-            String[] data = line.split(",");
-            teamsPlayers.add(Arrays.asList(data));
+        while ((line = csvInput.readLine()) != null) {//while line has data
+            String[] data = line.split(",");// split data by ,
+            teamsPlayers.add(Arrays.asList(data)); // add each bit of data to array
         }
         int teamsAmmount = 0;
-        for (int i = 0; i < teamsPlayers.size(); i++){
+        for (int i = 0; i < teamsPlayers.size(); i++){// for each team
             teamsAmmount += 1;
             teams.add(new TeamsPlayers.Teams(teamsPlayers.get(i).get(0), teamsAmmount));
             teamsAlreadyAdded.add(teamsPlayers.get(i).get(0));
@@ -65,13 +65,6 @@ public class CSV {
         }
         
     }
-        for (int i = 0; i < scoreSheetData.size();i++){
-            for (int z = 0; z < scoreSheetData.get(i).size();z++){
-                
-                System.out.println(scoreSheetData.get(i).get(z)); 
-            }
-             
-        }
     ScoreSheetController.matches.add(new Match.Match(scoreSheetData.get(0).get(0),scoreSheetData.get(0).get(1),scoreSheetData.get(1),scoreSheetData.get(2),scoreSheetData.get(3),scoreSheetData.get(4),scoreSheetData.get(5),scoreSheetData.get(6),scoreSheetData.get(7)));
 }
 }

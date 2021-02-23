@@ -13,11 +13,10 @@ import java.util.HashMap;
  * @author benja
  */
 public class Match {
-    private int matchNumber = 0;
  
     private String teamOne = "";
     private String teamTwo = "";
-    
+    private boolean matchComplete = false;
     private ArrayList<String> PlayersTeamAway = new ArrayList<String>();
     private ArrayList<String> PlayersTeamHome = new ArrayList<String>();
     
@@ -39,10 +38,11 @@ public class Match {
     private ArrayList<String> doubleSets = new ArrayList<String>();
     private ArrayList<String> homeWinDoubleSets  = new ArrayList<String>();
   
+    
     private ArrayList<String> setWins = new ArrayList<String>();
     private String matchScore;
     
-    public Match(String team1, String team2,ArrayList<String> PlayersAway, ArrayList<String> PlayersHome, ArrayList<String> PlayerOnePlayerThree,ArrayList<String> PlayerTwoPlayerThree, ArrayList<String> PlayerOnePlayerFour,ArrayList<String> PlayerTwoPlayerFour, ArrayList<String> doubleS){
+    public Match(String team1, String team2,ArrayList<String> PlayersHome, ArrayList<String> PlayersAway, ArrayList<String> PlayerOnePlayerThree,ArrayList<String> PlayerTwoPlayerThree, ArrayList<String> PlayerOnePlayerFour,ArrayList<String> PlayerTwoPlayerFour, ArrayList<String> doubleS){
         teamOne = team1;
         teamTwo = team2;   
         PlayersTeamAway = PlayersAway;
@@ -54,12 +54,17 @@ public class Match {
         
         doubleSets = doubleS;
     }
-    
-    public String getTeamAway(){
+    public boolean getMatchComplete(){
+        return matchComplete;
+    }
+    public void setMatchComplete(boolean status){
+        matchComplete = status;
+    }
+    public String getTeamHome(){
         return teamOne;
     }
     
-    public String getTeamHome(){
+    public String getTeamAway(){
         return teamTwo;
     }
     

@@ -173,17 +173,17 @@ public class ScoreSheetController implements Initializable {
     
     private void testModifyScoreSheet(int i){
             System.out.println(" ");
-            System.out.println("Matches " + matches.get(i).getTeamAway() + " Combo: " + awayTeamSelection.getValue());
-            System.out.println("Matches " + matches.get(i).getTeamHome() + " Combo: " + homeTeamSelection.getValue());
+            System.out.println("Matches " + matches.get(i).getTeamHome() + " Combo: " + awayTeamSelection.getValue());
+            System.out.println("Matches " + matches.get(i).getTeamAway() + " Combo: " + homeTeamSelection.getValue());
             System.out.println("Matches " + matches.get(i).getPlayersTeamAway().get(0) + " Combo: " + awayPlayerOne.getValue());
             System.out.println("Matches " + matches.get(i).getPlayersTeamAway().get(1) + " Combo: " + awayPlayerTwo.getValue());
             System.out.println("Matches " + matches.get(i).getPlayersTeamHome().get(0) + " Combo: " + homePlayerOne.getValue());
             System.out.println("Matches " + matches.get(i).getPlayersTeamHome().get(1) + " Combo: " + homePlayerTwo.getValue());
             System.out.println(" ");
-            if (matches.get(i).getTeamAway().equalsIgnoreCase(awayTeamSelection.getValue())){
+            if (matches.get(i).getTeamHome().equalsIgnoreCase(awayTeamSelection.getValue())){
                 System.out.println("TEST ONE PASS");
             }
-            if (matches.get(i).getTeamHome().equalsIgnoreCase(homeTeamSelection.getValue())){
+            if (matches.get(i).getTeamAway().equalsIgnoreCase(homeTeamSelection.getValue())){
                 System.out.println("TEST TWO PASS");
             }
             if (matches.get(i).getPlayersTeamAway().get(0).equalsIgnoreCase(awayPlayerOne.getValue())){
@@ -204,9 +204,9 @@ public class ScoreSheetController implements Initializable {
     void modifyScoreSheet(ActionEvent event) {
         boolean found = false;
         for (int i = 0; i < matches.size(); i++){     
-            //testModifyScoreSheet(i);
-            if(matches.get(i).getTeamAway().equalsIgnoreCase(awayTeamSelection.getValue()) 
-            && matches.get(i).getTeamHome().equalsIgnoreCase(homeTeamSelection.getValue())  
+            testModifyScoreSheet(i);
+            if(matches.get(i).getTeamHome().equalsIgnoreCase(homeTeamSelection.getValue()) 
+            && matches.get(i).getTeamAway().equalsIgnoreCase(awayTeamSelection.getValue())  
             && matches.get(i).getPlayersTeamAway().get(0).equalsIgnoreCase(awayPlayerOne.getValue()) 
             && matches.get(i).getPlayersTeamAway().get(1).equalsIgnoreCase(awayPlayerTwo.getValue()) 
             && matches.get(i).getPlayersTeamHome().get(0).equalsIgnoreCase(homePlayerOne.getValue())
@@ -292,9 +292,11 @@ public class ScoreSheetController implements Initializable {
         String winLoss = "loss";
         for(int l = 0; l < 3; l++){
             String[] splitResult = data.split(":");
-            
+            System.out.println(splitResult[0] + " " + splitResult[1]);
             if (Integer.parseInt(splitResult[0]) > Integer.parseInt(splitResult[1])){
                 return "Win";
+            }else{
+                return "loss";
             }
         }
         return winLoss;
@@ -303,20 +305,25 @@ public class ScoreSheetController implements Initializable {
          int teamOne = 0;
          int teamTwo = 0;
          for (int winLoss = 0; winLoss < gameScores.size(); winLoss++){
-            
+            System.out.println("Score " + gameScores.get(winLoss));
             if(gameScores.get(winLoss).equals("Win")){
                 teamOne += 1;
+                
             }else
             {
+                
                 teamTwo += 1;
             }
         }
         if(teamOne > teamTwo){
+           
             return "Win";
         }else if(teamOne < teamTwo)
         {
+            
             return "loss";
         }else{
+            
             return "draw";
         }
     }                    
@@ -325,58 +332,61 @@ public class ScoreSheetController implements Initializable {
         int teamTwo = 0;
         
         for (int i = 0; i < setWins.size(); i++){
-            if(setWins.get(i).equals("Win")){
+            if(setWins.get(i).equalsIgnoreCase("Win")){
+              
                 teamOne += 1;
             }
-            else{
+            else if (setWins.get(i).equalsIgnoreCase("loss")) {
+                
                 teamTwo +=1;
             }
         }
         return teamOne + ":" + teamTwo;
     }
-    public void calculateAll(int matchToEdit, String teamOne, String teamTwo){
+    public void calculateAll(int matchToEdit){
         ArrayList<String> tempWinPlayerOnePlayerThree = new ArrayList<String>();
         ArrayList<String> tempWinPlayerTwoPlayerThree = new ArrayList<String>();
         ArrayList<String> tempWinPlayerOnePlayerFour = new ArrayList<String>();
         ArrayList<String> tempWinPlayerTwoPlayerFour = new ArrayList<String>();
         ArrayList<String> tempWinDoubleSet = new ArrayList<String>();
         matches.get(editNumber).clearSetWins();
-        for (int u = 0; u < 2; u++){
-                            String temp = matches.get(matchToEdit).getPlayerOneVsPlayerThree().get(u);
-                            tempWinPlayerOnePlayerThree.add(gameWon(temp)); 
-                        }
-                        for (int y = 0; y < 2; y++){
-                            String temp = matches.get(matchToEdit).getPlayerTwoVsPlayerThree().get(y);
-                            tempWinPlayerTwoPlayerThree.add(gameWon(temp)); 
-                        }
-                        for (int h = 0; h < 2; h++){
-                            String temp = matches.get(matchToEdit).getPlayerOneVsPlayerFour().get(h);
-                            tempWinPlayerOnePlayerFour.add(gameWon(temp)); 
-                        }
-                        for (int c = 0; c < 2; c++){
-                            String temp = matches.get(matchToEdit).getPlayerTwoVsPlayerFour().get(c);
-                            tempWinPlayerTwoPlayerFour.add(gameWon(temp)); 
-                        }
-                        for (int f = 0; f < 2; f++){
-                            String temp = matches.get(matchToEdit).getDoubleSets().get(f);
-                            tempWinDoubleSet.add(gameWon(temp)); 
-                        }
-                        
-                        matches.get(matchToEdit).setHomeWinPlayerOneVsPlayerThree(tempWinPlayerOnePlayerThree);
-                        matches.get(matchToEdit).setHomeWinPlayerTwoVsPlayerThree(tempWinPlayerTwoPlayerThree);
-                        matches.get(matchToEdit).setHomeWinPlayerOneVsPlayerFour(tempWinPlayerOnePlayerFour);
-                        matches.get(matchToEdit).setHomeWinPlayerTwoVsPlayerFour(tempWinPlayerTwoPlayerFour);
-                        matches.get(matchToEdit).setHomeWinDoubleSets(tempWinDoubleSet);
-                        
-                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerOneVsPlayerThree()));
-                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerTwoVsPlayerThree()));
-                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerOneVsPlayerFour()));
-                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerTwoVsPlayerFour()));
-                        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinDoubleSets()));
-                        
-                        matches.get(matchToEdit).setMatchScore(finalMatchScores(matches.get(matchToEdit).getSetWins()));
-                        
-                        finalScore.setText(matches.get(matchToEdit).getMatchScore());
+        for (int u = 0; u <= 2; u++){
+            String temp = matches.get(matchToEdit).getPlayerOneVsPlayerThree().get(u);
+            System.out.println(matches.get(matchToEdit).getPlayerOneVsPlayerThree());
+            tempWinPlayerOnePlayerThree.add(gameWon(temp)); 
+        }
+        for (int y = 0; y <= 2; y++){
+            String temp = matches.get(matchToEdit).getPlayerTwoVsPlayerThree().get(y);
+            tempWinPlayerTwoPlayerThree.add(gameWon(temp)); 
+        }
+        for (int h = 0; h <= 2; h++){
+            String temp = matches.get(matchToEdit).getPlayerOneVsPlayerFour().get(h);
+            tempWinPlayerOnePlayerFour.add(gameWon(temp)); 
+        }
+        for (int c = 0; c <= 2; c++){
+            String temp = matches.get(matchToEdit).getPlayerTwoVsPlayerFour().get(c);
+            tempWinPlayerTwoPlayerFour.add(gameWon(temp)); 
+        }
+        for (int f = 0; f <= 2; f++){
+            String temp = matches.get(matchToEdit).getDoubleSets().get(f);
+            tempWinDoubleSet.add(gameWon(temp)); 
+        }
+
+        matches.get(matchToEdit).setHomeWinPlayerOneVsPlayerThree(tempWinPlayerOnePlayerThree);
+        matches.get(matchToEdit).setHomeWinPlayerTwoVsPlayerThree(tempWinPlayerTwoPlayerThree);
+        matches.get(matchToEdit).setHomeWinPlayerOneVsPlayerFour(tempWinPlayerOnePlayerFour);
+        matches.get(matchToEdit).setHomeWinPlayerTwoVsPlayerFour(tempWinPlayerTwoPlayerFour);
+        matches.get(matchToEdit).setHomeWinDoubleSets(tempWinDoubleSet);
+
+        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerOneVsPlayerThree()));
+        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerTwoVsPlayerThree()));
+        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerOneVsPlayerFour()));
+        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinPlayerTwoVsPlayerFour()));
+        matches.get(matchToEdit).setSetWins(winSet(matches.get(matchToEdit).getHomeWinDoubleSets()));
+
+        matches.get(matchToEdit).setMatchScore(finalMatchScores(matches.get(matchToEdit).getSetWins()));
+
+        finalScore.setText(matches.get(matchToEdit).getMatchScore());
     }
     
     @FXML
@@ -432,8 +442,8 @@ public class ScoreSheetController implements Initializable {
                         doubleS.add(field9DB.getText());
                 
                         matches.add(new Match.Match(awayTeamSelection.getValue(),homeTeamSelection.getValue(),playerTeamAway,playerTeamHome,PlayerOnePlayerThree,PlayerTwoPlayerThree,PlayerOnePlayerFour,PlayerTwoPlayerFour,doubleS));
-                        
-                        calculateAll(matches.size() - 1,awayTeamSelection.getValue(),homeTeamSelection.getValue());
+                        matches.get(matches.size() - 1).setMatchComplete(true);
+                        calculateAll(matches.size() - 1);
                         
                         break;
                         
@@ -465,8 +475,8 @@ public class ScoreSheetController implements Initializable {
                 matches.get(editNumber).setDoubleSets(field7DB.getText(), 0);
                 matches.get(editNumber).setDoubleSets(field8DB.getText(), 1);
                 matches.get(editNumber).setDoubleSets(field9DB.getText(), 2);
-                
-                calculateAll(editNumber,matches.get(editNumber).getTeamAway(),matches.get(editNumber).getTeamHome());
+                matches.get(editNumber).setMatchComplete(true);
+                calculateAll(editNumber);
                 System.out.print("Edit Made");
                 editMode = false;
                 

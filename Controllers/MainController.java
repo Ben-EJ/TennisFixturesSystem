@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,8 +37,11 @@ import javafx.stage.Stage;
  * @author benja
  */
 public class MainController extends Thread implements Initializable {
-    // =======================================LOGIN PAGE ===============================================
     
+    // =======================================LOGIN PAGE ===============================================
+    public static ArrayList<TeamsPlayers.TeamStats> teamStats = new ArrayList<TeamsPlayers.TeamStats>();
+    @FXML
+    private TextArea textAreaDataDisplay;
     @FXML
     private PasswordField password;
 
@@ -52,6 +57,7 @@ public class MainController extends Thread implements Initializable {
     private Tab adminPageTab;
     @FXML
     private Tab ScoreSheetPageTab;
+    
     @FXML
     void logIn(ActionEvent event) {
         boolean isLogedIn = false;
@@ -110,12 +116,21 @@ public class MainController extends Thread implements Initializable {
 
     @FXML
     void showAllTeamStats(ActionEvent event) {
-        System.out.println("showAllTeamStats");
+        textAreaDataDisplay.clear();
+        textAreaDataDisplay.setWrapText(true);
+        for (int i = 0; i < teamStats.size();i++){    
+            textAreaDataDisplay.appendText("Team Name: " + teamStats.get(i).getTeamName() + " Matches Played: " + teamStats.get(i).getMatchesPlayed() + " " + " Matches won: " + teamStats.get(i).getMatchesWon() + " Sets won: " + teamStats.get(i).getSetsWon() + "\n");
+        }
+        
     }
 
     @FXML
     void showAllTeamRankings(ActionEvent event) {
         System.out.println("showAllTeamRankings");
+        ArrayList<TeamsPlayers.TeamStats> teamStatsTemp = new ArrayList<TeamsPlayers.TeamStats>();
+        teamStatsTemp = teamStats;
+        
+        teamStatsTemp.sort(cmprtr);
     }
 
     @FXML
@@ -123,9 +138,6 @@ public class MainController extends Thread implements Initializable {
         System.out.println("viewMatchScores");
     }
     // =======================================VIEWER PAGE END===============================================
-
-  
-    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -137,6 +149,16 @@ public class MainController extends Thread implements Initializable {
        } catch (IOException ex) {
            System.out.println("Error adding CSV file data");
        }
+        
+        Timer recalcTeamStatsTimer = new Timer();
+        recalcTeamStatsTimer.scheduleAtFixedRate(new TimerTask() {
+        @Override
+        public void run() {
+           
+            AdminPageController.generateTeamStatsFunc();
+        }
+       }, 0, 30000);
+        
     }    
     
 }

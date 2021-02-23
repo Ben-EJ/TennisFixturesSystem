@@ -62,8 +62,8 @@ public class Teams {
     public void addMatchesWon(int numToAdd){
         matchesWon += numToAdd;
     }
-    public void addSetsWon(int numToAdd){
-        setsWon  += numToAdd;
+    public void setSetsWon(int numToAdd){
+        setsWon = numToAdd;
     }
     
      public void subMatchesPlayed(int numToSub){
