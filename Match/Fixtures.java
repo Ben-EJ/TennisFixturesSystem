@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class Fixtures {
     private int fixtureNumber;
-    ArrayList<String> teamList = new ArrayList<String>();
-    private String[] playersInFixtureSingles;
+    ArrayList<String> teamList = new ArrayList<String>();// stores teams in fixtures
+    private String[] playersInFixtureSingles;// stores players in fixture
     
     public Fixtures(int fixtureNum, ArrayList<String> teamsFixture){
          fixtureNumber = fixtureNum;

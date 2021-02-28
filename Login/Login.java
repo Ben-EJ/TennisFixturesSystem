@@ -16,6 +16,7 @@ public class Login {
     public Login(){
         
     }
+    // checks username an password entered by the user against the one stored in system
     public static boolean loginAsAssosiationSec(String userName, String password){
         if (userName.equals(usernameAssosiationSecritary) && password.equals(passwordAssosiationSecritary)){
            return true; 

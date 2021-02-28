@@ -14,33 +14,33 @@ import java.util.HashMap;
  */
 public class Match {
  
-    private String teamOne = "";
-    private String teamTwo = "";
-    private boolean matchComplete = false;
-    private ArrayList<String> PlayersTeamAway = new ArrayList<String>();
-    private ArrayList<String> PlayersTeamHome = new ArrayList<String>();
+    private String teamOne = ""; // stores home team name
+    private String teamTwo = "";// stores away team name
+    private boolean matchComplete = false;// true if matches complete
+    private ArrayList<String> PlayersTeamAway = new ArrayList<String>(); // stores away players in match
+    private ArrayList<String> PlayersTeamHome = new ArrayList<String>();// stores home players in match
     
-    private ArrayList<String> PlayerOneVsPlayerThree = new ArrayList<String>();
-    private ArrayList<String> homeWinPlayerOneVsPlayerThree = new ArrayList<String>();
+    private ArrayList<String> PlayerOneVsPlayerThree = new ArrayList<String>();// stores scores for this set of games
+    private ArrayList<String> homeWinPlayerOneVsPlayerThree = new ArrayList<String>(); // stores win/loss for home team
   
-    private ArrayList<String> PlayerTwoVsPlayerThree = new ArrayList<String>();
-    private ArrayList<String> homeWinPlayerTwoVsPlayerThree = new ArrayList<String>();
+    private ArrayList<String> PlayerTwoVsPlayerThree = new ArrayList<String>();// stores scores for this set of games
+    private ArrayList<String> homeWinPlayerTwoVsPlayerThree = new ArrayList<String>();// stores win/loss for home team
    
     
-    private ArrayList<String> PlayerOneVsPlayerFour = new ArrayList<String>();
-    private ArrayList<String> homeWinPlayerOneVsPlayerFour = new ArrayList<String>();
+    private ArrayList<String> PlayerOneVsPlayerFour = new ArrayList<String>();// stores scores for this set of games
+    private ArrayList<String> homeWinPlayerOneVsPlayerFour = new ArrayList<String>();// stores win/loss for home team
 
     
-    private ArrayList<String> PlayerTwoVsPlayerFour = new ArrayList<String>();
-    private ArrayList<String> homeWinPlayerTwoVsPlayerFour = new ArrayList<String>();
+    private ArrayList<String> PlayerTwoVsPlayerFour = new ArrayList<String>();// stores scores for this set of games
+    private ArrayList<String> homeWinPlayerTwoVsPlayerFour = new ArrayList<String>();// stores win/loss for home team
 
     
-    private ArrayList<String> doubleSets = new ArrayList<String>();
-    private ArrayList<String> homeWinDoubleSets  = new ArrayList<String>();
+    private ArrayList<String> doubleSets = new ArrayList<String>();// stores scores for this set of games
+    private ArrayList<String> homeWinDoubleSets  = new ArrayList<String>();// stores win/loss for home team
   
     
-    private ArrayList<String> setWins = new ArrayList<String>();
-    private String matchScore;
+    private ArrayList<String> setWins = new ArrayList<String>();// contains set wins/losses for home team
+    private String matchScore;// contains final match scores
     
     public Match(String team1, String team2,ArrayList<String> PlayersHome, ArrayList<String> PlayersAway, ArrayList<String> PlayerOnePlayerThree,ArrayList<String> PlayerTwoPlayerThree, ArrayList<String> PlayerOnePlayerFour,ArrayList<String> PlayerTwoPlayerFour, ArrayList<String> doubleS){
         teamOne = team1;
