@@ -66,5 +66,9 @@ public class CSV {
         
     }
     ScoreSheetController.matches.add(new Match.Match(scoreSheetData.get(0).get(0),scoreSheetData.get(0).get(1),scoreSheetData.get(1),scoreSheetData.get(2),scoreSheetData.get(3),scoreSheetData.get(4),scoreSheetData.get(5),scoreSheetData.get(6),scoreSheetData.get(7)));
-}
+    for (int i = 0; i < ScoreSheetController.matches.size(); i++){
+         ScoreSheetController.calculateAll(i);
+         ScoreSheetController.matches.get(i).setMatchComplete(true);
+     }
+   }
 }

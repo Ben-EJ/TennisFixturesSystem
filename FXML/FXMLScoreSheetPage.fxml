@@ -9,37 +9,50 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ScoreSheetController">
    <children>
-      <Label layoutX="319.0" layoutY="149.0" text="Single sets" />
-      <Label layoutX="315.0" layoutY="432.0" text="Double Sets" />
-      <ComboBox fx:id="homePlayerOne" layoutX="229.0" layoutY="180.0" onShowing="#comboBoxHomeTeamPlayersOne" prefWidth="150.0" promptText="Home Player" />
-      <ComboBox fx:id="awayPlayerTwo" layoutX="550.0" layoutY="132.0" onShowing="#comboBoxAwayTeamPlayersTwo" prefWidth="150.0" promptText="Away Player" />
-      <Label layoutX="466.0" layoutY="78.0" text="AwayTeam" />
-      <Label layoutX="229.0" layoutY="78.0" text="Home Team" />
-      <ComboBox fx:id="awayTeamSelection" layoutX="543.0" layoutY="74.0" onShowing="#comboBoxAwayTeam" prefWidth="150.0" promptText="Away Team" />
-      <ComboBox fx:id="homeTeamSelection" layoutX="306.0" layoutY="74.0" onShowing="#comboBoxHomeTeam" prefWidth="150.0" promptText="Home team" />
-      <TextField fx:id="field1" layoutX="389.0" layoutY="180.0" promptText="A:H" />
-      <TextField fx:id="field2" layoutX="389.0" layoutY="217.0" promptText="A:H" />
-      <TextField fx:id="field3" layoutX="389.0" layoutY="262.0" promptText="A:H" />
-      <TextField fx:id="field4" layoutX="389.0" layoutY="302.0" promptText="A:H" />
-      <TextField fx:id="field5" layoutX="389.0" layoutY="346.0" promptText="A:H" />
-      <TextField fx:id="field6" layoutX="389.0" layoutY="387.0" promptText="A:H" />
-      <TextField fx:id="field7DB" layoutX="389.0" layoutY="428.0" promptText="A:H" />
-      <TextField fx:id="field9DB" layoutX="389.0" layoutY="500.0" promptText="A:H" />
-      <TextField fx:id="field15" layoutX="550.0" layoutY="387.0" promptText="A:H" />
-      <TextField fx:id="field8DB" layoutX="389.0" layoutY="461.0" promptText="A:H" />
-      <TextArea fx:id="finalScore" layoutX="550.0" layoutY="427.0" prefHeight="104.0" prefWidth="168.0" promptText="Final Score">
+      <Label layoutX="380.0" layoutY="124.0" text="Single sets" />
+      <Label layoutX="376.0" layoutY="407.0" text="Double Sets" />
+      <ComboBox fx:id="homePlayerOne" layoutX="290.0" layoutY="155.0" onShowing="#comboBoxHomeTeamPlayersOne" prefWidth="150.0" promptText="Home Player" />
+      <ComboBox fx:id="awayPlayerTwo" layoutX="611.0" layoutY="107.0" onShowing="#comboBoxAwayTeamPlayersTwo" prefWidth="150.0" promptText="Away Player" />
+      <Label layoutX="527.0" layoutY="53.0" text="AwayTeam" />
+      <Label layoutX="290.0" layoutY="53.0" text="Home Team" />
+      <ComboBox fx:id="awayTeamSelection" layoutX="604.0" layoutY="49.0" onShowing="#comboBoxAwayTeam" prefWidth="150.0" promptText="Away Team" />
+      <ComboBox fx:id="homeTeamSelection" layoutX="367.0" layoutY="49.0" onShowing="#comboBoxHomeTeam" prefWidth="150.0" promptText="Home team" />
+      <TextField fx:id="field1" layoutX="450.0" layoutY="155.0" promptText="A:H" />
+      <TextField fx:id="field2" layoutX="450.0" layoutY="192.0" promptText="A:H" />
+      <TextField fx:id="field3" layoutX="450.0" layoutY="237.0" promptText="A:H" />
+      <TextField fx:id="field4" layoutX="450.0" layoutY="277.0" promptText="A:H" />
+      <TextField fx:id="field5" layoutX="450.0" layoutY="321.0" promptText="A:H" />
+      <TextField fx:id="field6" layoutX="450.0" layoutY="362.0" promptText="A:H" />
+      <TextField fx:id="field7DB" layoutX="450.0" layoutY="403.0" promptText="A:H" />
+      <TextField fx:id="field9DB" layoutX="450.0" layoutY="475.0" promptText="A:H" />
+      <TextField fx:id="field15" layoutX="611.0" layoutY="362.0" promptText="A:H" />
+      <TextField fx:id="field8DB" layoutX="450.0" layoutY="436.0" promptText="A:H" />
+      <TextArea fx:id="finalScore" layoutX="611.0" layoutY="402.0" prefHeight="104.0" prefWidth="168.0" promptText="Final Score">
          <font>
             <Font size="27.0" />
          </font></TextArea>
-      <TextField fx:id="field10" layoutX="550.0" layoutY="180.0" promptText="A:H" />
-      <TextField fx:id="field11" layoutX="550.0" layoutY="217.0" promptText="A:H" />
-      <TextField fx:id="field12" layoutX="550.0" layoutY="262.0" promptText="A:H" />
-      <TextField fx:id="field13" layoutX="550.0" layoutY="302.0" promptText="A:H" />
-      <TextField fx:id="field14" layoutX="550.0" layoutY="346.0" promptText="A:H" />
-      <ComboBox fx:id="awayPlayerOne" layoutX="389.0" layoutY="132.0" onShowing="#comboBoxAwayTeamPlayersOne" prefWidth="150.0" promptText="Away Player" />
-      <ComboBox fx:id="homePlayerTwo" layoutX="229.0" layoutY="302.0" onShowing="#comboBoxHomeTeamPlayersTwo" prefWidth="150.0" promptText="Home Player" />
+      <TextField fx:id="field10" layoutX="611.0" layoutY="155.0" promptText="A:H" />
+      <TextField fx:id="field11" layoutX="611.0" layoutY="192.0" promptText="A:H" />
+      <TextField fx:id="field12" layoutX="611.0" layoutY="237.0" promptText="A:H" />
+      <TextField fx:id="field13" layoutX="611.0" layoutY="277.0" promptText="A:H" />
+      <TextField fx:id="field14" layoutX="611.0" layoutY="321.0" promptText="A:H" />
+      <ComboBox fx:id="awayPlayerOne" layoutX="450.0" layoutY="107.0" onShowing="#comboBoxAwayTeamPlayersOne" prefWidth="150.0" promptText="Away Player" />
+      <ComboBox fx:id="homePlayerTwo" layoutX="290.0" layoutY="277.0" onShowing="#comboBoxHomeTeamPlayersTwo" prefWidth="150.0" promptText="Home Player" />
       <Button layoutX="120.0" layoutY="24.0" mnemonicParsing="false" onAction="#modifyScoreSheet" text="Modify sheet" />
       <Button layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#newScoreSheet" text="New sheet" />
-      <Button layoutX="96.0" layoutY="539.0" mnemonicParsing="false" onAction="#calculateScores" prefHeight="25.0" prefWidth="784.0" text="Calculate and submit scores" />
+      <Button layoutY="525.0" mnemonicParsing="false" onAction="#calculateScores" prefHeight="25.0" prefWidth="793.0" text="Calculate and submit scores" />
+      <Label layoutX="19.0" layoutY="95.0" text="In Modify Mode:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="modifyModeLabel" layoutX="138.0" layoutY="96.0" text="False">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="18.0" layoutY="127.0" text="To modify existing scoresheet enter detail " />
+      <Label layoutX="18.0" layoutY="162.0" text=" and click modify to open existing scoresheet." />
+      <Label layoutX="20.0" layoutY="144.0" text="(team names and player names)" />
    </children>
 </AnchorPane>

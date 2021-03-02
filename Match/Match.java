@@ -67,6 +67,7 @@ public class Match {
     public String getTeamAway(){
         return teamTwo;
     }
+  
     
     public ArrayList<String> getPlayersTeamAway(){
         return PlayersTeamAway;
@@ -76,6 +77,20 @@ public class Match {
         return PlayersTeamHome;
     }
     
+    public void setPlayersTeamAwayPlayerOne(String playerName){
+        PlayersTeamAway.set(0, playerName);
+    }
+    public void setPlayersTeamAwayPlayerTwo(String playerName){
+        PlayersTeamAway.set(1, playerName);
+    }
+    
+    public void setPlayersTeamHomePlayerOne(String playerName){
+        PlayersTeamHome.set(0, playerName);
+    }
+    
+    public void setPlayersTeamHomePlayerTwo(String playerName){
+        PlayersTeamHome.set(1, playerName);
+    }
     
     public ArrayList<String> getPlayerOneVsPlayerThree(){
         return PlayerOneVsPlayerThree;

@@ -95,7 +95,8 @@ public class ScoreSheetController implements Initializable {
     private ComboBox<String> homePlayerOne;
     @FXML
     private ComboBox<String> homePlayerTwo;
-    
+    @FXML
+    private Label modifyModeLabel;
     @FXML
     private TextArea finalScore;
     public static List<Match.Match> ScoreSheet = new ArrayList<Match.Match>();
@@ -176,6 +177,7 @@ public class ScoreSheetController implements Initializable {
     public static ArrayList<Match.Match> matches = new ArrayList<Match.Match>();
     public boolean editMode = false;
     public int editNumber = 0;      
+    
     private void testModifyScoreSheet(int i){
         System.out.println(" ");
         System.out.println("Matches " + matches.get(i).getTeamHome() + " Combo: " + awayTeamSelection.getValue());
@@ -208,7 +210,8 @@ public class ScoreSheetController implements Initializable {
     @FXML
     void modifyScoreSheet(ActionEvent event) {
         boolean found = false;
-        for (int i = 0; i < matches.size(); i++){    // for each match 
+        if (editMode == false){
+            for (int i = 0; i < matches.size(); i++){    // for each match 
             testModifyScoreSheet(i);
             // if all details of match are the same as the match details in combo boxes then
             if(matches.get(i).getTeamHome().equalsIgnoreCase(homeTeamSelection.getValue()) 
@@ -219,7 +222,15 @@ public class ScoreSheetController implements Initializable {
             && matches.get(i).getPlayersTeamHome().get(1).equalsIgnoreCase(homePlayerTwo.getValue()))     
             {
                 editMode = true;// switch on edit mode
+                homeTeamSelection.setDisable(true);
+                awayTeamSelection.setDisable(true);
                 found = true;// set found 
+                
+                modifyModeLabel.setText("True");
+                
+                Alert matchFound = new Alert(Alert.AlertType.CONFIRMATION);
+                matchFound.setHeaderText("Scoresheet Found");
+                matchFound.showAndWait();
                 
                 editNumber = i; // get current number of match to edit
                 // put found data in combo boxes                
@@ -250,6 +261,12 @@ public class ScoreSheetController implements Initializable {
             Alert noMatchFound = new Alert(Alert.AlertType.ERROR);
             noMatchFound.setHeaderText("No Match Found");
             noMatchFound.showAndWait();
+        }
+        
+        }else{
+            Alert editModeOn = new Alert(Alert.AlertType.ERROR);
+            editModeOn.setHeaderText("Edit mode is already ON");
+            editModeOn.showAndWait();
         }
     }
     
@@ -298,7 +315,7 @@ public class ScoreSheetController implements Initializable {
     }
     
     // calculates if a game was won by home team
-    public String gameWon(String data){
+    public  static String gameWon(String data){
         String winLoss = "loss";
         for(int l = 0; l < 3; l++){
             String[] splitResult = data.split(":");
@@ -312,7 +329,7 @@ public class ScoreSheetController implements Initializable {
         return winLoss;
     }
     // calculates if a set of games was won 
-    public String winSet(ArrayList<String> gameScores){
+    public  static String winSet(ArrayList<String> gameScores){
          int teamOne = 0;
          int teamTwo = 0;
          for (int winLoss = 0; winLoss < gameScores.size(); winLoss++){
@@ -338,8 +355,9 @@ public class ScoreSheetController implements Initializable {
             return "draw";
         }
     } 
+    
     //calculates match score
-    public String finalMatchScores(ArrayList<String> setWins){
+    public static String finalMatchScores(ArrayList<String> setWins){
         int teamOne = 0;
         int teamTwo = 0;
         
@@ -356,13 +374,13 @@ public class ScoreSheetController implements Initializable {
         return teamOne + ":" + teamTwo;
     }
     
-    public void calculateAll(int matchToEdit){
+    public static String calculateAll(int matchToEdit){
         ArrayList<String> tempWinPlayerOnePlayerThree = new ArrayList<String>();
         ArrayList<String> tempWinPlayerTwoPlayerThree = new ArrayList<String>();
         ArrayList<String> tempWinPlayerOnePlayerFour = new ArrayList<String>();
         ArrayList<String> tempWinPlayerTwoPlayerFour = new ArrayList<String>();
         ArrayList<String> tempWinDoubleSet = new ArrayList<String>();
-        matches.get(editNumber).clearSetWins();
+        matches.get(matchToEdit).clearSetWins();
         
         for (int u = 0; u <= 2; u++){// for each game score PlayerOne VS PlayerThree
             String temp = matches.get(matchToEdit).getPlayerOneVsPlayerThree().get(u);
@@ -402,9 +420,63 @@ public class ScoreSheetController implements Initializable {
         matches.get(matchToEdit).setMatchScore(finalMatchScores(matches.get(matchToEdit).getSetWins()));
         
         // sets text area to final matches scores
-        finalScore.setText(matches.get(matchToEdit).getMatchScore());
+        return matches.get(matchToEdit).getMatchScore();
     }
-    
+    public boolean inputCheck(ArrayList<String> dataCheckList){
+        
+        for (int i = 0; i < dataCheckList.size(); i++){
+            if(dataCheckList.get(i).equals("")){
+                 Alert error = new Alert(Alert.AlertType.ERROR);
+                 error.setHeaderText("Scoresheet has missing data");
+                 error.showAndWait();
+                 return false;
+            }
+            String[] splitResultChar = dataCheckList.get(i).split("(?!^)");
+            boolean foundColon = false;
+            for (int x = 0; x < splitResultChar.length; x++){
+                
+                if (splitResultChar[x].equals(":")){// if : is found in score then
+                    String[] splitResult =  dataCheckList.get(i).split(":");
+                    foundColon = true;
+                    if(splitResult.length > 2){// if more than one : included 
+                        Alert error = new Alert(Alert.AlertType.ERROR);
+                        error.setHeaderText("A game has more than two score values: " + dataCheckList.get(i));
+                        error.showAndWait();
+                        return false;   
+                    }
+                    else if(splitResult.length < 2){// if less than one score value given/ one score value given
+                        Alert error = new Alert(Alert.AlertType.ERROR);
+                        error.setHeaderText("A game has less than two score values: " + dataCheckList.get(i));
+                        error.showAndWait();
+                        return false;
+                    }
+                    else{
+                        for (int z = 0; z < splitResult.length; z++){
+                            // if anything other than an interger found return error
+                            try {
+                                Integer.parseInt(splitResult[z]); 
+                            }catch (Exception e){
+                                  Alert error = new Alert(Alert.AlertType.ERROR);
+                                  error.setHeaderText("A game has a score value that is not an interger: " + dataCheckList.get(i));
+                                  error.showAndWait();
+                                  return false;       
+                            }
+                            
+                        }
+                    }       
+                }
+            }
+            if(foundColon == false){
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setHeaderText("A game has a score value that has no colon: " + dataCheckList.get(i));
+                error.showAndWait();
+                return false;
+            }
+            
+            
+        }
+        return true;
+    }
     @FXML
     void calculateScores(ActionEvent event) {
         System.out.println("Calculate And Save");
@@ -434,7 +506,8 @@ public class ScoreSheetController implements Initializable {
                         ArrayList<String> tempWinPlayerTwoPlayerFour = new ArrayList<String>();
                         ArrayList<String> tempWinDoubleSet = new ArrayList<String>();
                         
-    
+                        ArrayList<String> dataCheckList = new ArrayList<String>();
+                        
                         playerTeamAway.add(awayPlayerOne.getValue());
                         playerTeamAway.add(awayPlayerTwo.getValue()); 
                         playerTeamHome.add(homePlayerOne.getValue());
@@ -460,12 +533,37 @@ public class ScoreSheetController implements Initializable {
                         doubleS.add(field8DB.getText());
                         doubleS.add(field9DB.getText());
                 
+                        dataCheckList.add(field1.getText());
+                        dataCheckList.add(field2.getText());
+                        dataCheckList.add(field3.getText());
+                        dataCheckList.add(field4.getText());
+                        dataCheckList.add(field5.getText());
+                        dataCheckList.add(field6.getText());
+                        dataCheckList.add(field7DB.getText());
+                        dataCheckList.add(field8DB.getText());
+                        dataCheckList.add(field9DB.getText());
+                        dataCheckList.add(field10.getText());
+                        dataCheckList.add(field11.getText());
+                        dataCheckList.add(field12.getText());
+                        dataCheckList.add(field13.getText());
+                        dataCheckList.add(field14.getText());
+                        dataCheckList.add(field15.getText());
+                        
                         matches.add(new Match.Match(homeTeamSelection.getValue(), awayTeamSelection.getValue(),playerTeamHome,playerTeamAway,PlayerOnePlayerThree,PlayerTwoPlayerThree,PlayerOnePlayerFour,PlayerTwoPlayerFour,doubleS));
                         matches.get(matches.size() - 1).setMatchComplete(true);
-                        calculateAll(matches.size() - 1);// calculate scores
                         
-                        break;
-                        
+                        if(inputCheck(dataCheckList) == true){
+                            finalScore.setText(calculateAll(matches.size() - 1));// calculate scores
+                            Alert dataSaved = new Alert(Alert.AlertType.CONFIRMATION);
+                            dataSaved.setHeaderText("Data Saved.");
+                            dataSaved.showAndWait();
+                        }else{
+                            Alert dataSavedWarning = new Alert(Alert.AlertType.WARNING);
+                            dataSavedWarning.setHeaderText("Data Saved however final scores not calculated due to error in scoresheet");
+                            dataSavedWarning.showAndWait();
+                        }
+                       
+                         break;        
                         }
                     else{
                         System.out.println("Does not exist");
@@ -475,6 +573,12 @@ public class ScoreSheetController implements Initializable {
         }
         else if(editMode == true){// if edit mode is on then
                 // edit currently selected match (save any new values entered / edited )
+                
+                matches.get(editNumber).setPlayersTeamAwayPlayerOne(awayPlayerOne.getValue());
+                matches.get(editNumber).setPlayersTeamAwayPlayerTwo(awayPlayerTwo.getValue());
+                matches.get(editNumber).setPlayersTeamHomePlayerOne(homePlayerOne.getValue());
+                matches.get(editNumber).setPlayersTeamHomePlayerTwo(homePlayerTwo.getValue());
+                
                 matches.get(editNumber).setPlayerOneVsPlayerThree(field1.getText(), 0);
                 matches.get(editNumber).setPlayerOneVsPlayerThree(field2.getText(), 1);
                 matches.get(editNumber).setPlayerOneVsPlayerThree(field3.getText(), 2);
@@ -495,17 +599,54 @@ public class ScoreSheetController implements Initializable {
                 matches.get(editNumber).setDoubleSets(field8DB.getText(), 1);
                 matches.get(editNumber).setDoubleSets(field9DB.getText(), 2);
                 matches.get(editNumber).setMatchComplete(true);
-                calculateAll(editNumber); // recalculate scores
+                
+                ArrayList<String> dataCheckList = new ArrayList<String>();
+                dataCheckList.add(field1.getText());
+                dataCheckList.add(field2.getText());
+                dataCheckList.add(field3.getText());
+                dataCheckList.add(field4.getText());
+                dataCheckList.add(field5.getText());
+                dataCheckList.add(field6.getText());
+                dataCheckList.add(field7DB.getText());
+                dataCheckList.add(field8DB.getText());
+                dataCheckList.add(field9DB.getText());
+                dataCheckList.add(field10.getText());
+                dataCheckList.add(field11.getText());
+                dataCheckList.add(field12.getText());
+                dataCheckList.add(field13.getText());
+                dataCheckList.add(field14.getText());
+                dataCheckList.add(field15.getText());
+                
+                if(inputCheck(dataCheckList) == true){
+                    finalScore.setText(calculateAll(editNumber)); // recalculate scores
+                    Alert editMade = new Alert(Alert.AlertType.CONFIRMATION);
+                    editMade.setHeaderText("Edit Made and saved");
+                    editMade.showAndWait();
+                }else{
+                    Alert editMadeButError = new Alert(Alert.AlertType.WARNING);
+                    editMadeButError.setHeaderText("Edit Made and saved however score calculation not completed due to error in scoresheet");
+                    editMadeButError.showAndWait();
+                }
+                                
                 System.out.print("Edit Made");
+                modifyModeLabel.setText("False");
                 editMode = false;// make sure edit mode is off before continuing 
                 
+                homeTeamSelection.setDisable(false);
+                awayTeamSelection.setDisable(false);
+                
+                
+                
+        }else{
+            Alert editFailed = new Alert(Alert.AlertType.ERROR);
+            editFailed.setHeaderText("Edit failed not saved");
+            editFailed.showAndWait();
         }
         
     }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+        
     }    
     
 }

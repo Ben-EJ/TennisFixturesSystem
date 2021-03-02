@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import static Controllers.AdminPageController.teams;
 import Csv.CSV;
 import Login.Login;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.Timer;
@@ -131,12 +133,98 @@ public class MainController extends Thread implements Initializable {
     }
     
     // =======================================LOGIN PAGE END===============================================
-    
+    public String addSpaces(String string){
+        String spacesToAdd = " ";
+        int stringLength = string.length() / 2;
+        for (int i = 0; i < stringLength; i++){
+            spacesToAdd = spacesToAdd + " ";
+        }
+        return spacesToAdd;
+    }
     // =======================================VIEWER PAGE ===============================================
     @FXML
     void viewFixtureChart(ActionEvent event) {
+       textAreaDataDisplay.clear();
        System.out.println("viewFixtureChart");
-    }
+       
+       if(!AdminPageController.fixtures.isEmpty()){// if fixtures are not generated alert the user
+               if (AdminPageController.teamsAlreadyAdded == null){
+               Alert noTeamsAdded = new Alert(Alert.AlertType.CONFIRMATION);
+               noTeamsAdded.setHeaderText("No teams added ");
+               noTeamsAdded.showAndWait();
+               
+               }else{
+                   String columns = "  ";
+                   for (int z = 0; z <  AdminPageController.teamsAlreadyAdded.get(0).length();z++ ){// for the first team an as many spaces to the final strings begining as its length
+                       columns = columns + " ";
+                   }
+                   for (int i = 0; i < AdminPageController.teamsAlreadyAdded.size(); i++){// for each team name add to final column string
+
+                      if (i >= AdminPageController.teamsAlreadyAdded.size() - 1){// on the end team name add a new line instead of a space
+                          columns  = columns + String.format(AdminPageController.teamsAlreadyAdded.get(i) + "\n");
+                      }else{
+                          columns  = columns + String.format(AdminPageController.teamsAlreadyAdded.get(i) + " ");
+                      }
+                   }
+                   textAreaDataDisplay.appendText(columns);// display the column
+
+
+                   for (int rowCount = 0; rowCount < AdminPageController.teamsAlreadyAdded.size(); rowCount++){// for all columns
+
+                        // Generates rows
+                        String rowFinal = "";
+                        String currentRow = "";
+
+                        currentRow = AdminPageController.teamsAlreadyAdded.get(rowCount);
+
+                        rowFinal = rowFinal + currentRow;
+
+                       for(int columnCount = 0; columnCount < AdminPageController.teamsAlreadyAdded.size(); columnCount++ ){//for all rows  
+                           String currentColumn = AdminPageController.teamsAlreadyAdded.get(columnCount);     // get current column heading          
+                           if(AdminPageController.teamsAlreadyAdded.get(rowCount).equalsIgnoreCase(AdminPageController.teamsAlreadyAdded.get(columnCount))){// if the row and column are the same team append ... to final row string
+                               rowFinal = rowFinal + addSpaces(currentColumn);
+                               rowFinal = rowFinal + " ... ";
+                           }else{
+                                boolean foundInMatch = false;
+                                for (int matchNum = 0; matchNum < ScoreSheetController.matches.size();matchNum++){// for each match
+                                    // if the home team name in match equals the current row and the away team name in match equal away team name in column then
+                                    if (ScoreSheetController.matches.get(matchNum).getTeamHome().equals(currentRow) && ScoreSheetController.matches.get(matchNum).getTeamAway().equals(currentColumn)){
+                                        foundInMatch = true;
+                                        
+                                        if(ScoreSheetController.matches.get(matchNum).getMatchScore() != null){// if match has a score then append score to final row string otherwise add not played (np) to final row string
+                                           rowFinal = rowFinal + addSpaces(currentColumn);
+                                           rowFinal = rowFinal + String.format(ScoreSheetController.matches.get(matchNum).getMatchScore());
+
+                                        }else
+                                        {
+                                           rowFinal = rowFinal + addSpaces(currentColumn);
+                                           rowFinal = rowFinal + String.format(" np");
+
+                                        } 
+                             }   
+
+                        }
+                        if(foundInMatch == false){// if a match was not found for the fixture
+                            // search fixtures for a matching pair of home team and away team names that match the row and column and append np (Not played)    
+                            for(int fixtureAmmount = 0; fixtureAmmount < AdminPageController.fixtures.size(); fixtureAmmount++){
+                                if (AdminPageController.fixtures.get(fixtureAmmount).getTeamsInFixture().get(0).equalsIgnoreCase(AdminPageController.teamsAlreadyAdded.get(rowCount)) && AdminPageController.fixtures.get(fixtureAmmount).getTeamsInFixture().get(1).equalsIgnoreCase(AdminPageController.teamsAlreadyAdded.get(columnCount)) ){
+                                    rowFinal = rowFinal + addSpaces(currentColumn);
+                                    rowFinal = rowFinal + String.format(" np ");
+                                }
+                        }
+                    }
+
+                    }     
+                }
+                       textAreaDataDisplay.appendText(rowFinal + "\n");// display the row in the text area
+                }
+            }
+           } else{// alert the user if no fixtures were generated
+               Alert noFixturesGenerated = new Alert(Alert.AlertType.ERROR);
+               noFixturesGenerated.setHeaderText("No fixtures generated");
+               noFixturesGenerated.showAndWait();
+       }
+}
 
     @FXML
     void showAllTeamStats(ActionEvent event) {
@@ -303,7 +391,15 @@ public class MainController extends Thread implements Initializable {
         recalcTeamStatsTimer.scheduleAtFixedRate(new TimerTask() {
         @Override
         public void run() {
-            AdminPageController.generateTeamStatsFunc();
+            System.out.println("Timer Tick");
+            for (int i = 0; i < Controllers.ScoreSheetController.matches.size(); i++){
+                if(Controllers.ScoreSheetController.matches.get(i).getMatchComplete() == true){
+                    System.out.println("Timer Tick pass");
+                    AdminPageController.generateTeamStatsFunc();
+                    break;
+                }               
+            }
+            
         }
        }, 0, 30000);
         
